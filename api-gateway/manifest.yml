@@ -1,0 +1,8 @@
+applications:
+- name: dba-docker-test-api-gateway
+  memory: 512M
+  instances: 1
+  env:
+    SPRING_PROFILES_ACTIVE: pcf
+  docker:
+    image: davisballen/test_api-gateway:0.0.1-SNAPSHOT
