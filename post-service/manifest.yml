@@ -1,0 +1,8 @@
+applications:
+- name: dba-docker-test-post-service
+  memory: 512M
+  instances: 1
+  env:
+    SPRING_PROFILES_ACTIVE: pcf
+  docker:
+    image: davisballen/test_post-service:0.0.1-SNAPSHOT

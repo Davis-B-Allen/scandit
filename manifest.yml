@@ -1,11 +1,4 @@
 applications:
-- name: dba-docker-test-api-gateway
-  memory: 512M
-  instances: 1
-  env:
-    SPRING_PROFILES_ACTIVE: pcf
-  docker:
-    image: davisballen/test_api-gateway:0.0.1-SNAPSHOT
 - name: dba-docker-test-eureka
   memory: 512M
   instances: 1
@@ -13,3 +6,26 @@ applications:
     SPRING_PROFILES_ACTIVE: pcf
   docker:
     image: davisballen/test_eureka:0.0.1-SNAPSHOT
+- name: dba-docker-test-api-gateway
+  memory: 512M
+  instances: 1
+  env:
+    SPRING_PROFILES_ACTIVE: pcf
+  docker:
+    image: davisballen/test_api-gateway:0.0.1-SNAPSHOT
+- name: dba-docker-test-auth-service
+  memory: 512M
+  instances: 1
+  env:
+    SPRING_PROFILES_ACTIVE: pcf
+    SPRING_APPLICATION_NAME: auth
+  docker:
+    image: davisballen/test_auth-service:0.0.1-SNAPSHOT
+- name: dba-docker-test-post-service
+  memory: 512M
+  instances: 1
+  env:
+    SPRING_PROFILES_ACTIVE: pcf
+    SPRING_APPLICATION_NAME: posts
+  docker:
+    image: davisballen/test_post-service:0.0.1-SNAPSHOT
