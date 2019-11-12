@@ -1,0 +1,11 @@
+zuul:
+  routes:
+    signup:
+      path: /signup/**
+      serviceId: auth
+      strip-prefix: false
+    login:
+      path: /login/**
+      serviceId: auth
+      strip-prefix: false
+

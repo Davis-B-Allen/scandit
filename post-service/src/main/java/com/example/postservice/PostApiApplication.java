@@ -22,7 +22,7 @@ public class PostApiApplication {
 
     @RequestMapping("/")
     public String home() {
-        return "some posts";
+        return "some most excellent posts";
     }
 
     @GetMapping("/myposts")

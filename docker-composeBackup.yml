@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  eureka:
+    build: ./eureka-server
+    ports:
+      - '8761:8761'
+    environment:
+      - SPRING_PROFILES_ACTIVE=dockernet
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - '8080:8080'
+    depends_on:
+      - eureka
+    environment:
+      - SPRING_PROFILES_ACTIVE=dockernet
+  post-service:
+    build: ./post-service
+    ports:
+      - '8081:8081'
+    depends_on:
+      - eureka
+    environment:
+      - SPRING_PROFILES_ACTIVE=dockernet
+  auth-service:
+    build: ./auth-service
+    ports:
+      - '8082:8082'
+    depends_on:
+      - eureka
+    environment:
+      - SPRING_PROFILES_ACTIVE=dockernet
+  postgresdev:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=pgdev
+      - SPRING_FLYWAY_LOCATIONS=/config/migration
