@@ -7,9 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -32,6 +31,21 @@ public class PostApiApplication {
             return "my posts";
         }
         return "NOT AUTHED";
+    }
+
+    @PostMapping("/post")
+    public String createPost(@RequestHeader("Authorization") String bearerToken) {
+        System.out.println(bearerToken);
+        ResponseEntity<String> authResponse = null;
+        try {
+            authResponse = authClient.createPostAuth(bearerToken);
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        }
+        String authString = authResponse.getBody();
+        System.out.println(authString);
+        return "Post Created!";
     }
 
 	public static void main(String[] args) {

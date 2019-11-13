@@ -8,4 +8,9 @@ zuul:
       path: /login/**
       serviceId: auth
       strip-prefix: false
+    post:
+      path: /post
+      serviceId: posts
+      sensitiveHeaders:
+      strip-prefix: false
 

@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
         return authorities;
     }
 
-    private User getUser(String username) {
+    public User getUser(String username) {
         return userRepository.findByUsername(username);
     }
 }
