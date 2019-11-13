@@ -23,15 +23,14 @@ public class UserController {
         return "valid auth";
     }
 
-
     @PostMapping("/signup")
     public ResponseEntity signup(@Valid @RequestBody User user) {
         return ResponseEntity.ok(userService.signup(user));
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "You're trying really hard to log in";
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody User user) {
+        return ResponseEntity.ok(userService.login(user));
     }
 
 }

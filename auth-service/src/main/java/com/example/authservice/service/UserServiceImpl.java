@@ -43,6 +43,16 @@ public class UserServiceImpl implements UserService {
         return null; // TODO: throw some more sensible exception
     }
 
+    @Override
+    public JwtResponse login(User user) {
+        User foundUser = userRepository.findByEmail(user.getEmail());
+        if (foundUser != null && bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
+            UserDetails userDetails = loadUserByUsername(foundUser.getUsername());
+            return new JwtResponse(jwtUtil.generateToken(userDetails), foundUser.getUsername());
+        }
+        return null; // TODO: throw some more sensible exception
+    }
+
     public UserDetails loadUserByUsername(String username) {
 
         User user = getUser(username);
