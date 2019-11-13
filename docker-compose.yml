@@ -13,7 +13,7 @@ services:
       - ./eureka-server:/app
     command: 'mvn spring-boot:run'
     environment:
-      - SPRING_PROFILES_ACTIVE=dockernet
+      - SPRING_PROFILES_ACTIVE=dockernet,global
   api-gateway:
     # image: maven:3.6.1-jdk-8
     build:
@@ -28,7 +28,7 @@ services:
       - eureka
     command: 'mvn spring-boot:run'
     environment:
-      - SPRING_PROFILES_ACTIVE=dockernet
+      - SPRING_PROFILES_ACTIVE=dockernet,global
   postgresdev:
     image: postgres
     ports:
@@ -52,7 +52,7 @@ services:
       - eureka
     command: 'mvn spring-boot:run'
     environment:
-      - SPRING_PROFILES_ACTIVE=dockernet
+      - SPRING_PROFILES_ACTIVE=dockernet,global
   post-service:
     # image: maven:3.6.1-jdk-8
     build:
@@ -67,4 +67,4 @@ services:
       - eureka
     command: 'mvn spring-boot:run'
     environment:
-      - SPRING_PROFILES_ACTIVE=dockernet
+      - SPRING_PROFILES_ACTIVE=dockernet,global
