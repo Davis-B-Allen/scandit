@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +29,12 @@ public class User {
     @NotNull(message = "Password must be present")
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "user_role_user",
+        joinColumns = {@JoinColumn(name = "user_id")},
+        inverseJoinColumns = @JoinColumn(name = "user_role_id"))
+    private List<UserRole> userRoles;
 
     public User() { }
 
@@ -67,5 +75,19 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    public List<UserRole> addUserRole(UserRole userRole) {
+        if (userRoles == null) userRoles = new ArrayList<>();
+        userRoles.add(userRole);
+        return userRoles;
     }
 }
