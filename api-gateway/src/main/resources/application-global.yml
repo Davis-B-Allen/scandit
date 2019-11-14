@@ -14,7 +14,7 @@ zuul:
       strip-prefix: false
     post:
       path: /post
-      serviceId: posts
+      serviceId: post
       sensitiveHeaders:
       strip-prefix: false
 

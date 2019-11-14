@@ -2,8 +2,8 @@
 
 [eureka server](http://dba-docker-test-eureka.cfapps.io/)
 
-[posts microservice](http://dba-docker-test-api-gateway.cfapps.io/posts/)
+[post microservice](http://dba-docker-test-api-gateway.cfapps.io/post/)
 
 [auth microservice](http://dba-docker-test-api-gateway.cfapps.io/auth/)
 
-[posts microservice communicating with auth microservice](http://dba-docker-test-api-gateway.cfapps.io/posts/myposts)
+[post microservice communicating with auth microservice](http://dba-docker-test-api-gateway.cfapps.io/post/myposts)
