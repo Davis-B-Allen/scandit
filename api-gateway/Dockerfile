@@ -17,6 +17,7 @@ ARG JAR_FILE=target/api-gateway-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} api-gateway.jar
 
 COPY ./src/main/resources/*.properties /config/
+COPY ./src/main/resources/*.yml /config/
 
 ENV SPRING_PROFILES_ACTIVE dev
 

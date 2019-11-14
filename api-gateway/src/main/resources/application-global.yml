@@ -1,0 +1,22 @@
+zuul:
+  routes:
+    auth:
+      path: /auth/**
+      serviceId: auth
+      sensitiveHeaders:
+    signup:
+      path: /signup/**
+      serviceId: auth
+      strip-prefix: false
+    login:
+      path: /login/**
+      serviceId: auth
+      strip-prefix: false
+    post:
+      path: /post
+      serviceId: post
+      sensitiveHeaders:
+      strip-prefix: false
+
+jwt:
+  secret: batarian
