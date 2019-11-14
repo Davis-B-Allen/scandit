@@ -3,21 +3,21 @@ applications:
   memory: 512M
   instances: 1
   env:
-    SPRING_PROFILES_ACTIVE: pcf
+    SPRING_PROFILES_ACTIVE: pcf,global
   docker:
     image: davisballen/test_eureka:0.0.1-SNAPSHOT
 - name: dba-docker-test-api-gateway
   memory: 512M
   instances: 1
   env:
-    SPRING_PROFILES_ACTIVE: pcf
+    SPRING_PROFILES_ACTIVE: pcf,global
   docker:
     image: davisballen/test_api-gateway:0.0.1-SNAPSHOT
 - name: dba-docker-test-auth-service
   memory: 512M
   instances: 1
   env:
-    SPRING_PROFILES_ACTIVE: pcf
+    SPRING_PROFILES_ACTIVE: pcf,global
     SPRING_APPLICATION_NAME: auth
   docker:
     image: davisballen/test_auth-service:0.0.1-SNAPSHOT
@@ -25,7 +25,7 @@ applications:
   memory: 512M
   instances: 1
   env:
-    SPRING_PROFILES_ACTIVE: pcf
+    SPRING_PROFILES_ACTIVE: pcf,global
     SPRING_APPLICATION_NAME: posts
   docker:
     image: davisballen/test_post-service:0.0.1-SNAPSHOT

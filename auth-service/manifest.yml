@@ -3,6 +3,6 @@ applications:
   memory: 512M
   instances: 1
   env:
-    SPRING_PROFILES_ACTIVE: pcf
+    SPRING_PROFILES_ACTIVE: pcf,global
   docker:
     image: davisballen/test_auth-service:0.0.1-SNAPSHOT
