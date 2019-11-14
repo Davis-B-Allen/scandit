@@ -1,5 +1,9 @@
 zuul:
   routes:
+    auth:
+      path: /auth/**
+      serviceId: auth
+      sensitiveHeaders:
     signup:
       path: /signup/**
       serviceId: auth
@@ -14,3 +18,5 @@ zuul:
       sensitiveHeaders:
       strip-prefix: false
 
+jwt:
+  secret: batarian
