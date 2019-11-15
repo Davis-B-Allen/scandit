@@ -10,4 +10,10 @@ public interface PostService {
     PostResponse createPost(Post post, String username);
 
     List<Post> deletePostsByUser(String username);
+
+    Iterable<Post> getAllPosts();
+
+    Iterable<Post> getPostsByUsername(String username);
+
+    Long deletePost(Long postId);
 }
