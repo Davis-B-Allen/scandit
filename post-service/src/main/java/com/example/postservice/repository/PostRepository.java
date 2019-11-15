@@ -11,4 +11,6 @@ public interface PostRepository extends CrudRepository<Post, Long> {
 
     List<Post> deleteByUsername(String username);
 
+    Iterable<Post> getPostsByUsername(String username);
+
 }
