@@ -33,21 +33,6 @@ public class PostApiApplication {
         return "NOT AUTHED";
     }
 
-    @PostMapping("/post")
-    public String createPost(@RequestHeader("Authorization") String bearerToken) {
-        System.out.println(bearerToken);
-        ResponseEntity<String> authResponse = null;
-        try {
-            authResponse = authClient.createPostAuth(bearerToken);
-        } catch (Exception e) {
-            System.out.println(e);
-            throw e;
-        }
-        String authString = authResponse.getBody();
-        System.out.println(authString);
-        return "Post Created!";
-    }
-
 	public static void main(String[] args) {
 		SpringApplication.run(PostApiApplication.class, args);
 	}
