@@ -11,9 +11,11 @@ public interface PostService {
 
     List<Post> deletePostsByUser(String username);
 
-    Iterable<Post> getAllPosts();
+    List<PostResponse> getAllPosts();
 
     Iterable<Post> getPostsByUsername(String username);
+
+    Post getPostById(Long postId);
 
     Long deletePost(Long postId);
 }

@@ -7,6 +7,7 @@ import com.example.postservice.service.PostService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class PostController {
     }
 
     @GetMapping("/post/list")
-    public Iterable<Post> getAllPosts() {
+    public List<PostResponse> getAllPosts() {
         return postService.getAllPosts();
     }
 
@@ -50,8 +51,20 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{postId}")
-    public Long deletePost(@PathVariable Long postId) {
-        return postService.deletePost(postId);
+    public ResponseEntity<String> deletePost(@RequestHeader("Authorization") String bearerToken, @PathVariable Long postId) {
+        ResponseEntity<Map<String, Object>> authResponse = authClient.createPostAuth(bearerToken);
+        Map<String, Object> userAuthData = authResponse.getBody();
+        List<String> authorities = (List<String>) userAuthData.get("authorities");
+        String username = (String) userAuthData.get("username");
+
+        Post post = postService.getPostById(postId);
+        if (username.equals(post.getUsername()) || authorities.contains("ROLE_ADMIN")) {
+            return ResponseEntity.ok(postService.deletePost(postId).toString());
+        } else {
+            return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
+
+
     }
 
 
