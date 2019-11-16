@@ -3,6 +3,7 @@ package com.example.postservice.controller;
 import com.example.postservice.client.AuthClient;
 import com.example.postservice.model.Post;
 import com.example.postservice.responseobjects.PostResponse;
+import com.example.postservice.responseobjects.User;
 import com.example.postservice.service.PostService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,19 @@ public class PostController {
         } else {
             return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
+    }
 
 
+
+
+
+
+    // Service-to-service methods
+
+    @GetMapping("/posts/{postId}")
+    public PostResponse getPostById(@PathVariable Long postId) {
+        Post post = postService.getPostById(postId);
+        return new PostResponse(post.getId(), post.getTitle(), post.getDescription(), new User(post.getUsername()));
     }
 
 
