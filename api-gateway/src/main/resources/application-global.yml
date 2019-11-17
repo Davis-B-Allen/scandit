@@ -12,6 +12,11 @@ zuul:
       path: /login/**
       serviceId: auth
       strip-prefix: false
+    profile:
+      path: /profile
+      serviceId: profile
+      sensitiveHeaders:
+      strip-prefix: false
     post:
       path: /post
       serviceId: post
