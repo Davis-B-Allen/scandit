@@ -27,11 +27,21 @@ zuul:
       serviceId: post
       sensitiveHeaders:
       strip-prefix: false
-    createComment:
-      path: /comment/*
+    getCommentsByPostId:
+      path: /post/*/comment
+      serviceId: comment
+      strip-prefix: false
+    comment:
+      path: /comment/**
       serviceId: comment
       sensitiveHeaders:
       strip-prefix: false
+    commentsByUser:
+      path: /user/comment
+      serviceId: comment
+      sensitiveHeaders:
+      strip-prefix: false
+  ignored-services: '*'
 
 jwt:
   secret: batarian

@@ -13,8 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 public class PostController {
@@ -73,11 +76,20 @@ public class PostController {
 
     // Service-to-service methods
 
+    @GetMapping("/posts")
+    public Iterable<PostResponse> getPostsByPostIds(@RequestHeader("Post-Ids") String ids) {
+        String[] postIdStrings = ids.split(";");
+        Long[] postIds = new Long[postIdStrings.length];
+        for (int i = 0; i < postIdStrings.length; i++) {
+            postIds[i] = new Long(Long.parseLong(postIdStrings[i]));
+        }
+        return postService.getPostsByPostIds(postIds);
+    }
+
     @GetMapping("/posts/{postId}")
     public PostResponse getPostById(@PathVariable Long postId) {
         Post post = postService.getPostById(postId);
         return new PostResponse(post.getId(), post.getTitle(), post.getDescription(), new User(post.getUsername()));
     }
-
 
 }

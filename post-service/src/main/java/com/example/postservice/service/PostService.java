@@ -18,4 +18,6 @@ public interface PostService {
     Post getPostById(Long postId);
 
     Long deletePost(Long postId);
+
+    Iterable<PostResponse> getPostsByPostIds(Long[] ids);
 }
