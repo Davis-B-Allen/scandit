@@ -1,5 +1,6 @@
 package com.example.postservice.service;
 
+import com.example.postservice.client.CommentClient;
 import com.example.postservice.model.Post;
 import com.example.postservice.repository.PostRepository;
 import com.example.postservice.responseobjects.PostResponse;
@@ -19,6 +20,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    CommentClient commentClient;
 
     @Override
     public PostResponse createPost(Post post, String username) {
@@ -68,7 +72,18 @@ public class PostServiceImpl implements PostService {
     @Override
     public Long deletePost(Long postId) {
         postRepository.deleteById(postId);
+        commentClient.deleteCommentsByPostId(postId);
         return postId;
+    }
+
+    @Override
+    public Iterable<PostResponse> getPostsByPostIds(Long[] ids) {
+        List<PostResponse> allPostResponses = new ArrayList<>();
+        Iterable<Post> allPosts = postRepository.getPostsByIdIn(ids);
+        for (Post post : allPosts ) {
+            allPostResponses.add(new PostResponse(post.getId(), post.getTitle(), post.getDescription(), new User(post.getUsername())));
+        }
+        return allPostResponses;
     }
 
 }

@@ -13,4 +13,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
 
     Iterable<Post> getPostsByUsername(String username);
 
+
+    Iterable<Post> getPostsByIdIn(Long[] ids);
+
 }
