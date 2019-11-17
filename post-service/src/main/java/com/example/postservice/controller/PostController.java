@@ -47,7 +47,7 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public Iterable<Post> getPostsByUsername(@RequestHeader("Authorization") String bearerToken) {
+    public List<PostResponse> getPostsByUsername(@RequestHeader("Authorization") String bearerToken) {
         ResponseEntity<Map<String, Object>> authResponse = authClient.createPostAuth(bearerToken);
         Map<String, Object> userAuthData = authResponse.getBody();
         String username = (String) userAuthData.get("username");

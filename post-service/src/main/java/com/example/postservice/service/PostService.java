@@ -13,7 +13,7 @@ public interface PostService {
 
     List<PostResponse> getAllPosts();
 
-    Iterable<Post> getPostsByUsername(String username);
+    List<PostResponse> getPostsByUsername(String username);
 
     Post getPostById(Long postId);
 
