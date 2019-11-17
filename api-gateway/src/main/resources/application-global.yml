@@ -12,6 +12,11 @@ zuul:
       path: /login/**
       serviceId: auth
       strip-prefix: false
+    profile:
+      path: /profile
+      serviceId: profile
+      sensitiveHeaders:
+      strip-prefix: false
     post:
       path: /post
       serviceId: post
@@ -27,6 +32,8 @@ zuul:
       serviceId: post
       sensitiveHeaders:
       strip-prefix: false
+    
+
 
 jwt:
   secret: batarian
