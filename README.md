@@ -21,8 +21,12 @@ We chose to have all routes that required authentication be routed to an auth se
 ## Challenges 
 Our first major challenge was figuring out how to properly configure the services for deployment on PCF. Aside from that, our other major hurdle was retrieving data from multiple services based on one request, such as retrieving all of a user’s posts.
 
-## Project ERD
-[ERD](Project3ERD.png)
+## Diagrams
+### ERD
+![ERD](images/Project3ERD.png)
+
+### Architecture
+![Architecture](images/Project3Architecture.png)
  
  
 ## User Stories
