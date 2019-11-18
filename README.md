@@ -11,6 +11,7 @@ By Davis Allen and Ariel Mendoza
 * Eureka Server
 * Pivotal Tracker
 * Postgresql
+* IntelliJ
  
 ## Approach
 After setting up the initial stories for essential functionality, we decided to begin by setting up a skeleton of the application including a eureka server and api gateway, and microservices for auth and posts, to tackle getting a microservice application up and running on pivotal cloud foundry. Once that was running successfully, we focused on building out the core services.
