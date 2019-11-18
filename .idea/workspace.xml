@@ -2,7 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ded56e1-77ce-49fb-9092-811e7136e669" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/api-gateway/api-gateway.iml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/api-gateway.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/example/apigateway/ZuulGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/example/apigateway/ZuulGatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/example/apigateway/config/JwtRequestFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/example/apigateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/example/apigateway/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/example/apigateway/util/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application-global.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application-global.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/example/authservice/config/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/example/authservice/config/JwtRequestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/example/authservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/example/authservice/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/example/authservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/example/authservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/client/AuthClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/responseobject/CommentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/responseobject/CommentResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/service/CommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/service/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/comment-service/src/main/java/com/example/commentservice/service/CommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/PostApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/PostApiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/client/AuthClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/controller/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/responseobjects/PostResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/responseobjects/PostResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/service/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/post-service/src/main/java/com/example/postservice/service/PostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/example/profileservice/ProfileApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/example/profileservice/ProfileApiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/example/profileservice/client/AuthClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile-service/src/main/java/com/example/profileservice/controller/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profile-service/src/main/java/com/example/profileservice/controller/ProfileController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +74,7 @@
       <updated>1573569778987</updated>
       <workItem from="1573569785703" duration="472000" />
       <workItem from="1573600933301" duration="7000" />
+      <workItem from="1574055626584" duration="9000" />
     </task>
     <servers />
   </component>

@@ -7,8 +7,8 @@ public class CommentResponse extends Comment {
     private User user;
     private Post post;
 
-    public CommentResponse(Long id, String text, String username, Long postId, User user, Post post) {
-        super(id, text, username, postId);
+    public CommentResponse(Comment comment, User user, Post post) {
+        super(comment.getId(), comment.getText(), comment.getUsername(), comment.getPostId());
         this.user = user;
         this.post = post;
     }

@@ -1,6 +1,6 @@
-package com.example.authservice.service;
+package com.example.userservice.service;
 
-import com.example.authservice.model.UserRole;
+import com.example.userservice.model.UserRole;
 
 public interface UserRoleService {
 

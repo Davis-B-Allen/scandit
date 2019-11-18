@@ -1,16 +1,14 @@
-package com.example.authservice.controller;
+package com.example.userservice.controller;
 
-import com.example.authservice.model.UserRole;
-import com.example.authservice.service.UserRoleService;
+import com.example.userservice.model.UserRole;
+import com.example.userservice.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/role")
 public class UserRoleController {
-
     @Autowired
     UserRoleService userRoleService;
 

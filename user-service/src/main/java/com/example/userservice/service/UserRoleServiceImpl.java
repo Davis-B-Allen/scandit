@@ -1,7 +1,7 @@
-package com.example.authservice.service;
+package com.example.userservice.service;
 
-import com.example.authservice.model.UserRole;
-import com.example.authservice.repository.UserRoleRepository;
+import com.example.userservice.model.UserRole;
+import com.example.userservice.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
