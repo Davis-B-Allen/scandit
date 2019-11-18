@@ -4,22 +4,22 @@ FROM openjdk:8-jdk-alpine
 # Add Maintainer info:
 MAINTAINER davisallen <davis.b.allen@gmail.com>
 
-# Make port 8081 available to the world outside this container:
-EXPOSE 8081
+# Make port 8084 available to the world outside this container:
+EXPOSE 8084
 
 # Add a volume pointing to /tmp:
 VOLUME /tmp
 
 # The application's JAR file:
-ARG JAR_FILE=target/post-service-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/profile-service-0.0.1-SNAPSHOT.jar
 
 # Add the application's JAR to the container:
-ADD ${JAR_FILE} post-service.jar
+ADD ${JAR_FILE} profile-service.jar
 
 COPY ./src/main/resources/*.properties /config/
-
-ENV SPRING_PROFILES_ACTIVE dev
 COPY ./src/main/resources/db/migration /config/migration
 
+ENV SPRING_PROFILES_ACTIVE dev
+
 # Run the jar file:
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/post-service.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/profile-service.jar"]

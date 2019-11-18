@@ -1,8 +1,8 @@
 applications:
-- name: dba-docker-test-posts-service
+- name: dba-docker-test-user-service
   memory: 512M
   instances: 1
   env:
     SPRING_PROFILES_ACTIVE: pcf,global
   docker:
-    image: davisballen/test_post-service:0.0.1-SNAPSHOT
+    image: davisballen/test_user-service:0.0.1-SNAPSHOT

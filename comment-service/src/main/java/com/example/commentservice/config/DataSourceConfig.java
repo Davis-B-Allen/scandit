@@ -1,4 +1,4 @@
-package com.example.postservice.config;
+package com.example.commentservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
