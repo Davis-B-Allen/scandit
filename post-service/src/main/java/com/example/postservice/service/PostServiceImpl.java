@@ -60,8 +60,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<Post> getPostsByUsername(String username) {
-        return postRepository.getPostsByUsername(username);
+    public List<PostResponse> getPostsByUsername(String username) {
+        // get all posts by username from the repository as a list of posts
+        // next, create a PostResponse object for each post, add the post to it and a user object with the username to it
+        // then return the list of PostResponses to the controller
+        List<PostResponse> userPostResponses = new ArrayList<>();
+        Iterable<Post> userPosts = postRepository.getPostsByUsername(username);
+        userPosts.forEach(post -> userPostResponses.add(new PostResponse(post.getId(), post.getTitle(), post.getDescription(), new User(post.getUsername()))));
+        return userPostResponses;
+
     }
 
     @Override
