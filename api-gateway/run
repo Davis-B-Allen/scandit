@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mvn -Dspring.profiles.active=dev,global,local clean install
+java -jar -Dspring.profiles.active=dev,global,local target/api-gateway-0.0.1-SNAPSHOT.jar
