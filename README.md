@@ -16,18 +16,26 @@ By Davis Allen and Ariel Mendoza
 ## Approach
 After setting up the initial stories for essential functionality, we decided to begin by setting up a skeleton of the application including a eureka server and api gateway, and microservices for auth and posts, to tackle getting a microservice application up and running on pivotal cloud foundry. Once that was running successfully, we focused on building out the core services.
  
-We chose to have all routes that required authentication be routed to an auth service, which also provided user information for other services to consume. 
+Before Zuul routes any request on to the microservices, it first calls a dedicated Auth Service (this is implemented with Zuul's Pre Filters).
+
+We tried to keep everything as loosely coupled as possible. We have separate databases for each service. Posts and Comments services are the only two services which talk to each other (excluding zuul and eureka).
+
+We used username as the foreign key wherever possible, allowing us to avoid needing to call the user database for user info.
+
+
  
  
 ## Challenges 
 Our first major challenge was figuring out how to properly configure the services for deployment on PCF. Aside from that, our other major hurdle was retrieving data from multiple services based on one request, such as retrieving all of a user’s posts.
 
+We also had issues with serializing objects out to JSON and deserializing objects we were getting back in JSON.
+
 ## Diagrams
 ### ERD
-![ERD](images/Project3ERD.png)
+![Architecture](images/Project3ERD.png)
 
 ### Architecture
-![Architecture](images/Project3Architecture.png)
+![ERD](Project-3-Architecture.png)
  
  
 ## User Stories
