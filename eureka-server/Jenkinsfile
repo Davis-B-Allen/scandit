@@ -12,14 +12,21 @@ pipeline {
                     sh 'mvn -B -DskipTests -Dspring.profiles.active=pcf,global clean package'
                 }
             }
-            
+
         }
         stage('Test') {
-                steps {
-                    dir("eureka-server/") {
-                        sh 'mvn test'
-                    }
+            steps {
+                dir("eureka-server/") {
+                    sh 'mvn test'
                 }
             }
+        }
+        stage('Deliver') {
+            steps {
+                dir("eureka-server/") {
+                    sh 'docker images'
+                }
+            }
+        }
     }
 }
