@@ -18,24 +18,9 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    JwtRequestFilter jwtRequestFilter;
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.cors().and()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/signup/**", "/login/**", "/post/list/**", "/", "/post/*/comment").permitAll()
-                .antMatchers("/post/**", "/profile").authenticated()
-                .antMatchers("/auth/role/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.cors().and().csrf().disable();
     }
 
     @Bean

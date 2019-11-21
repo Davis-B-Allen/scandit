@@ -1,16 +1,15 @@
 zuul:
   routes:
-    auth:
-      path: /auth/**
-      serviceId: auth
-      sensitiveHeaders:
+    roles:
+      path: /user/role/**
+      serviceId: user
     signup:
       path: /signup/**
-      serviceId: auth
+      serviceId: user
       strip-prefix: false
     login:
       path: /login/**
-      serviceId: auth
+      serviceId: user
       strip-prefix: false
     profile:
       path: /profile
@@ -19,6 +18,11 @@ zuul:
       strip-prefix: false
     post:
       path: /post
+      serviceId: post
+      sensitiveHeaders:
+      strip-prefix: false
+    userPosts:
+      path: /user/post
       serviceId: post
       sensitiveHeaders:
       strip-prefix: false

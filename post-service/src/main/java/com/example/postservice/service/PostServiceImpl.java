@@ -29,9 +29,7 @@ public class PostServiceImpl implements PostService {
         if (username != null && !username.equals("")) {
             post.setUsername(username);
             Post savedPost = postRepository.save(post);
-            User user = new User(username);
-            PostResponse postResponse = new PostResponse(post.getId(), savedPost.getTitle(), savedPost.getDescription(), user);
-            return postResponse;
+            return new PostResponse(savedPost, new User(username));
         } else {
             System.out.println("USERNAME WAS EITHER NULL OR BLANK; WE REALLY SHOULDN'T BE HERE!!!");
         }
@@ -54,21 +52,19 @@ public class PostServiceImpl implements PostService {
         List<PostResponse> allPostResponses = new ArrayList<>();
         Iterable<Post> allPosts = postRepository.findAll();
         for (Post post : allPosts ) {
-            allPostResponses.add(new PostResponse(post.getId(), post.getTitle(), post.getDescription(), new User(post.getUsername())));
+            allPostResponses.add(new PostResponse(post, new User(post.getUsername())));
         }
         return allPostResponses;
     }
 
     @Override
     public List<PostResponse> getPostsByUsername(String username) {
-        // get all posts by username from the repository as a list of posts
-        // next, create a PostResponse object for each post, add the post to it and a user object with the username to it
-        // then return the list of PostResponses to the controller
         List<PostResponse> userPostResponses = new ArrayList<>();
         Iterable<Post> userPosts = postRepository.getPostsByUsername(username);
-        userPosts.forEach(post -> userPostResponses.add(new PostResponse(post.getId(), post.getTitle(), post.getDescription(), new User(post.getUsername()))));
+        for (Post post : userPosts) {
+            userPostResponses.add(new PostResponse(post, new User(post.getUsername())));
+        }
         return userPostResponses;
-
     }
 
     @Override
@@ -83,12 +79,13 @@ public class PostServiceImpl implements PostService {
         return postId;
     }
 
+    // Necessary when fetching all of a user's comments (and their corresponding posts
     @Override
     public Iterable<PostResponse> getPostsByPostIds(Long[] ids) {
         List<PostResponse> allPostResponses = new ArrayList<>();
         Iterable<Post> allPosts = postRepository.getPostsByIdIn(ids);
         for (Post post : allPosts ) {
-            allPostResponses.add(new PostResponse(post.getId(), post.getTitle(), post.getDescription(), new User(post.getUsername())));
+            allPostResponses.add(new PostResponse(post, new User(post.getUsername())));
         }
         return allPostResponses;
     }

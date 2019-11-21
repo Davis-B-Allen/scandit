@@ -1,6 +1,41 @@
 version: '3'
 
 services:
+  postgresdev:
+    image: postgres
+    ports:
+     - "5432:5432"
+    environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_USER=postgres
+     - POSTGRES_DB=pgdev
+  postgresdevpost:
+    image: postgres
+    ports:
+     - "5433:5433"
+    environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_USER=postgres
+     - POSTGRES_DB=pgdevposts
+     - PGPORT=5433
+  postgresdevprofile:
+    image: postgres
+    ports:
+     - "5434:5434"
+    environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_USER=postgres
+     - POSTGRES_DB=pgdevprofiles
+     - PGPORT=5434
+  postgresdevcomment:
+    image: postgres
+    ports:
+     - "5435:5435"
+    environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_USER=postgres
+     - POSTGRES_DB=pgdevcomments
+     - PGPORT=5435
   eureka:
     # image: maven:3.6.1-jdk-8
     build:
@@ -29,14 +64,6 @@ services:
     command: 'mvn spring-boot:run'
     environment:
       - SPRING_PROFILES_ACTIVE=dockernet,global
-  postgresdev:
-    image: postgres
-    ports:
-     - "5432:5432"
-    environment:
-     - POSTGRES_PASSWORD=password
-     - POSTGRES_USER=postgres
-     - POSTGRES_DB=pgdev
   auth-service:
     # image: maven:3.6.1-jdk-8
     build:
@@ -63,6 +90,51 @@ services:
     working_dir: /app
     volumes:
       - ./post-service:/app
+    depends_on:
+      - eureka
+    command: 'mvn spring-boot:run'
+    environment:
+      - SPRING_PROFILES_ACTIVE=dockernet,global
+  user-service:
+    # image: maven:3.6.1-jdk-8
+    build:
+      context: ./user-service
+      dockerfile: Dockerfiledev
+    ports:
+      - '8085:8085'
+    working_dir: /app
+    volumes:
+      - ./user-service:/app
+    depends_on:
+      - eureka
+    command: 'mvn spring-boot:run'
+    environment:
+      - SPRING_PROFILES_ACTIVE=dockernet,global
+  comment-service:
+    # image: maven:3.6.1-jdk-8
+    build:
+      context: ./comment-service
+      dockerfile: Dockerfiledev
+    ports:
+      - '8083:8083'
+    working_dir: /app
+    volumes:
+      - ./comment-service:/app
+    depends_on:
+      - eureka
+    command: 'mvn spring-boot:run'
+    environment:
+      - SPRING_PROFILES_ACTIVE=dockernet,global
+  profile-service:
+    # image: maven:3.6.1-jdk-8
+    build:
+      context: ./profile-service
+      dockerfile: Dockerfiledev
+    ports:
+      - '8084:8084'
+    working_dir: /app
+    volumes:
+      - ./profile-service:/app
     depends_on:
       - eureka
     command: 'mvn spring-boot:run'

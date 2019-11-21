@@ -19,6 +19,7 @@ ADD ${JAR_FILE} post-service.jar
 COPY ./src/main/resources/*.properties /config/
 
 ENV SPRING_PROFILES_ACTIVE dev
+COPY ./src/main/resources/db/migration /config/migration
 
 # Run the jar file:
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/post-service.jar"]

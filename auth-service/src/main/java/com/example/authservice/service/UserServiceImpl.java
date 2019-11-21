@@ -29,35 +29,8 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
-    UserRoleService userRoleService;
-
-    @Autowired
     JwtUtil jwtUtil;
 
-    @Override
-    public JwtResponse signup(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        UserRole userRole = userRoleService.getUserRoleByName("ROLE_USER");
-        if (userRole != null) user.addUserRole(userRole);
-
-        User savedUser = userRepository.save(user);
-        if (savedUser != null) {
-            UserDetails userDetails = loadUserByUsername(savedUser.getUsername());
-            return new JwtResponse(jwtUtil.generateToken(userDetails), savedUser.getUsername());
-        }
-        return null; // TODO: throw some more sensible exception
-    }
-
-    @Override
-    public JwtResponse login(User user) {
-        User foundUser = userRepository.findByEmail(user.getEmail());
-        if (foundUser != null && bCryptPasswordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
-            UserDetails userDetails = loadUserByUsername(foundUser.getUsername());
-            return new JwtResponse(jwtUtil.generateToken(userDetails), foundUser.getUsername());
-        }
-        return null; // TODO: throw some more sensible exception
-    }
 
     public UserDetails loadUserByUsername(String username) {
         User user = getUser(username);

@@ -6,8 +6,8 @@ public class PostResponse extends Post {
 
     private User user;
 
-    public PostResponse(Long id, String title, String description, User user) {
-        super(id, title, description, user.getUsername());
+    public PostResponse(Post post, User user) {
+        super(post.getId(), post.getTitle(), post.getDescription(), user.getUsername());
         this.user = user;
     }
 

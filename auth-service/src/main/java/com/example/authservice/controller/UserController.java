@@ -25,31 +25,27 @@ public class UserController {
     @Autowired
     AuthenticationUtil authenticationUtil;
 
-    @RequestMapping("/")
-    public String home() {
-        return "valid auth";
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(userService.signup(user));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody User user) {
-        return ResponseEntity.ok(userService.login(user));
-    }
-
     // TODO: CHANGE THIS CATCHALL WILDCARD, PROBABLY (SEEMS LIKE A BAD IDEA)
+//    @RequestMapping("/**")
+//    public ResponseEntity<Map<String, Object>> authRoute(@RequestHeader("Authorization") String bearerToken) {
+//        Authentication auth = authenticationUtil.getAuthentication();
+//        String username = auth.getName();
+//        List<String> authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+//        Map<String, Object> userAuthData = new HashMap<>();
+//        userAuthData.put("username", username);
+//        userAuthData.put("authorities", authorities);
+//        return ResponseEntity.ok(userAuthData);
+//    }
+//    @RequestMapping("/auth")
     @RequestMapping("/**")
-    public ResponseEntity<Map<String, Object>> authRoute(@RequestHeader("Authorization") String bearerToken) {
+    public ResponseEntity<User> auth() {
         Authentication auth = authenticationUtil.getAuthentication();
-        String username = auth.getName();
-        List<String> authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-        Map<String, Object> userAuthData = new HashMap<>();
-        userAuthData.put("username", username);
-        userAuthData.put("authorities", authorities);
-        return ResponseEntity.ok(userAuthData);
+        if (auth != null) {
+            String username = auth.getName();
+            User user = userService.getUser(username);
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.ok(null);
     }
 
 }

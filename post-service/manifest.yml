@@ -1,5 +1,5 @@
 applications:
-- name: dba-docker-test-post-service
+- name: dba-docker-test-posts-service
   memory: 512M
   instances: 1
   env:
