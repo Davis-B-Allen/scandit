@@ -5,10 +5,12 @@ pipeline {
             args ' -v /tmp/.m2:/tmp/.m2'
         }
     }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'ls .'
+    dir("eureka-server/") {
+        stages {
+            stage('Build') {
+                steps {
+                    sh 'ls .'
+                }
             }
         }
     }
