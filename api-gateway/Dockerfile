@@ -5,7 +5,7 @@ FROM openjdk:8-jdk-alpine
 MAINTAINER davisallen <davis.b.allen@gmail.com>
 
 # Make port 8080 available to the world outside this container:
-EXPOSE 8080
+EXPOSE 8082
 
 # Add a volume pointing to /tmp:
 VOLUME /tmp
