@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        registry = "davisballen/scandit_eureka"
+        registryCredential = 'dockerhub'
+    }
     agent {
         docker {
             image 'maven:3.6.2-jdk-8'
@@ -24,7 +28,9 @@ pipeline {
         stage('Deliver') {
             steps {
                 dir("eureka-server/") {
-                    sh 'docker images'
+                    script {
+                        docker.build registry + ":0.0.1-SNAPSHOT"
+                    }
                 }
             }
         }
