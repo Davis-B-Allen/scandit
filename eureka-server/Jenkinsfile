@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine'
+            image 'maven:3.6.2-jdk-8'
             args ' -v /tmp/.m2:/tmp/.m2'
         }
     }
@@ -12,6 +12,14 @@ pipeline {
                     sh 'mvn -B -DskipTests -Dspring.profiles.active=pcf,global clean package'
                 }
             }
+            
         }
+        stage('Test') {
+                steps {
+                    dir("eureka-server/") {
+                        sh 'mvn test'
+                    }
+                }
+            }
     }
 }
