@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir("eureka-server/") {
-                    sh 'ls .'
+                    sh 'mvn -B -DskipTests -Dspring.profiles.active=pcf,global clean package'
                 }
             }
         }
