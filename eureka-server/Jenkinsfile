@@ -6,12 +6,12 @@ pipeline {
         }
     }
     stages {
-        dir("eureka-server/") {
-            stage('Build') {
-                steps {
-                    sh 'ls .'
+        stage('Build') {
+            steps {
+                dir("eureka-server/") {
+                sh 'ls .'
                 }
-            }   
+            }
         }
     }
 }
