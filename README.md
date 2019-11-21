@@ -32,10 +32,10 @@ We also had issues with serializing objects out to JSON and deserializing object
 
 ## Diagrams
 ### ERD
-![Architecture](images/Project3ERD.png)
+![ERD](images/Project3ERD.png)
 
 ### Architecture
-![ERD](Project-3-Architecture.png)
+![Architecture](Project-3-Architecture.png)
  
  
 ## User Stories
