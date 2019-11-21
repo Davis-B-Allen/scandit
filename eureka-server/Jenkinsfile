@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir("eureka-server/") {
-                sh 'ls .'
+                    sh 'ls .'
                 }
             }
         }
