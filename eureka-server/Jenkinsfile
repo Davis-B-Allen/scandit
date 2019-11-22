@@ -6,17 +6,18 @@ pipeline {
     agent {
         docker {
             image 'maven:3.6.2-jdk-8'
-            args ' -v /tmp/.m2:/tmp/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
+            args ' -v /tmp/.m2:/tmp/.m2'
         }
     }
     stages {
-        stage('Build') {
+        stage('Deliver') {
             steps {
                 dir("eureka-server/") {
-                    sh 'docker images'
+                    script {
+                        docker.build registry + ":0.0.1-SNAPSHOT"
+                    }
                 }
             }
-
         }
     }
 }
