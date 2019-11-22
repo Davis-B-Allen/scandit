@@ -28,7 +28,9 @@ pipeline {
         stage('Deliver') {
             steps {
                 dir("eureka-server/") {
-                    sh 'sudo docker images'
+                    script {
+                        docker.build registry + ":0.0.1-SNAPSHOT"
+                    }
                 }
             }
         }
