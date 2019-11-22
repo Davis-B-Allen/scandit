@@ -29,7 +29,7 @@ pipeline {
             steps {
                 dir("eureka-server/") {
                     script {
-                        docker.build registry + ":0.0.1-SNAPSHOT"
+                        sudo docker.build registry + ":0.0.1-SNAPSHOT"
                     }
                 }
             }
