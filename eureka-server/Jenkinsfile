@@ -10,6 +10,14 @@ pipeline {
         }
     }
     stages {
+        stage('Build') {
+            steps {
+                dir("eureka-server/") {
+                    sh 'echo $USER'
+                }
+            }
+
+        }
         stage('Deliver') {
             steps {
                 dir("eureka-server/") {
