@@ -11,25 +11,25 @@ pipeline {
     }
     stages {
         stage('Build') {
-            dir("eureka-server/") {
-                steps {
+            steps {
+                dir("eureka-server/") {
                     sh 'mvn -B -DskipTests clean package'
                 }
             }
         }
         stage('Test') {
-            dir("eureka-server/") {
-                steps {
-                    sh 'mvn test'
-                }
+            steps {
+              dir("eureka-server/") {
+                  sh 'mvn test'
+              }
             }
         }
         stage('Deliver') {
-            dir("eureka-server/") {
-                steps {
-                        script {
-                            docker.build registry + ":0.0.1-SNAPSHOT"
-                        }
+            steps {
+                dir("eureka-server/") {
+                    script {
+                        docker.build registry + ":0.0.1-SNAPSHOT"
+                    }
                 }
             }
         }
