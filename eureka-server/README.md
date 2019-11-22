@@ -1,3 +1,3 @@
 # Eureka Server
 
-1204
+1206
