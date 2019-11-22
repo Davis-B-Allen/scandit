@@ -1,11 +1,15 @@
 package com.example.commentservice.service;
 
 import com.example.commentservice.client.PostClient;
+import com.example.commentservice.messenger.Sender;
 import com.example.commentservice.model.Comment;
 import com.example.commentservice.repository.CommentRepository;
 import com.example.commentservice.responseobject.CommentResponse;
 import com.example.commentservice.responseobject.Post;
 import com.example.commentservice.responseobject.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +27,19 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     PostClient postClient;
 
+    @Autowired
+    Sender sender;
+
     @Override
-    public CommentResponse createComment(Comment comment, String username, Long postId) {
+    public CommentResponse createComment(Comment comment, String username, Long postId) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         Post post = postClient.getPostById(postId);
         comment.setUsername(username);
         comment.setPostId(post.getId());
         Comment createdComment = commentRepository.save(comment);
-        return new CommentResponse(createdComment, new User(username), post);
+        CommentResponse commentResponse = new CommentResponse(createdComment, new User(username), post);
+        sender.send(objectMapper.writeValueAsString(commentResponse));
+        return commentResponse;
     }
 
     @Override
