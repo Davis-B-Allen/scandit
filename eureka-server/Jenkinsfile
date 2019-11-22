@@ -6,7 +6,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3.6.2-jdk-8'
-            args ' -v /tmp/.m2:/tmp/.m2'
+            args ' --privileged -v /tmp/.m2:/tmp/.m2 -v /usr/bin/docker:/usr/bin/docker'
         }
     }
     stages {
