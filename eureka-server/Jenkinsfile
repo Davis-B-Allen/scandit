@@ -63,8 +63,8 @@ pipeline {
             }
         }
         stage('dockerCleanup') {
-            dir("eureka-server/") {
-                steps {
+            steps {
+                dir("eureka-server/") {
                     sh "docker rmi $registry:$BUILD_NUMBER"
                 }
             }
