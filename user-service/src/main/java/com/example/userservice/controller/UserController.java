@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.userservice.model.User;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -28,6 +29,7 @@ public class UserController {
         return ResponseEntity.ok(userService.login(user));
     }
 
+    @ApiIgnore
     @GetMapping("/user/{username}")
     public User getUserByUsername(@PathVariable String username) {
         return userService.getUser(username);

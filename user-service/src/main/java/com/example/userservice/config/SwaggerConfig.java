@@ -25,7 +25,8 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.userservice.controller"))
-                .paths(PathSelectors.ant("/signup/**"))
+                .paths(PathSelectors.any())
+                //.paths(PathSelectors.ant("/signup/**"))
                 .build()
                 .apiInfo(apiEndPointsInfo());
     }
