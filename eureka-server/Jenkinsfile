@@ -24,6 +24,13 @@ pipeline {
               }
             }
         }
+        stage('Coverage') {
+            steps {
+                dir("eureka-server/") {
+                    sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+                }
+            }
+        }
         stage('Deliver') {
             steps {
                 dir("eureka-server/") {
