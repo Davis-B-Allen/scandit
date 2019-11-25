@@ -9,6 +9,9 @@ pipeline {
             args ' --privileged -u="root" -v /tmp/.m2:/root/.m2 -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
         stage('Build') {
             steps {
@@ -22,6 +25,16 @@ pipeline {
               dir("eureka-server/") {
                   sh 'mvn test'
               }
+            }
+        }
+        stage('Coverage') {
+            steps {
+                sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+            }
+            post {
+                always {
+                    cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+                }
             }
         }
         stage('Deliver') {

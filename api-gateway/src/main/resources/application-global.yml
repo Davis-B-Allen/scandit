@@ -1,8 +1,9 @@
 zuul:
   routes:
     roles:
-      path: /user/role/**
+      path: /role/**
       serviceId: user
+      strip-prefix: false
     signup:
       path: /signup/**
       serviceId: user

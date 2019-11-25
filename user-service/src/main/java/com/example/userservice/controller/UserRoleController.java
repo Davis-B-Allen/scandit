@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/role")
 public class UserRoleController {
     @Autowired
     UserRoleService userRoleService;
