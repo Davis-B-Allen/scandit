@@ -5,9 +5,10 @@ import com.example.profileservice.responseobjects.ProfileResponse;
 import com.example.profileservice.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
-public class ProfileController {
+public class UserProfileController {
 
     @Autowired
     ProfileService profileService;
@@ -24,7 +25,7 @@ public class ProfileController {
     }
 
     // external methods
-
+    @ApiIgnore
     @DeleteMapping("/profile/{username}")
     public String deleteProfileByUsername(@PathVariable String username) {
         return profileService.deleteProfileByUsername(username);
