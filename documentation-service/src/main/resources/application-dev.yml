@@ -15,3 +15,7 @@ eureka:
 swagger: 
   config: 
     refreshrate: 5000
+
+spring:
+  application:
+    name: documentation

@@ -1,5 +1,9 @@
 zuul:
   routes:
+    documentation:
+      path: /swagger**
+      serviceId: documentation
+      strip-prefix: false
     roles:
       path: /role/**
       serviceId: user

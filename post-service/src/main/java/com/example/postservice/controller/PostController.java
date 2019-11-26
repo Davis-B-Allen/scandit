@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,12 +47,13 @@ public class PostController {
     }
 
     // Service-to-service methods
-
+    @ApiIgnore
     @DeleteMapping("/posts/{username}")
     public List<Post> deletePostsByUser(@PathVariable String username) {
         return postService.deletePostsByUser(username);
     }
 
+    @ApiIgnore
     @GetMapping("/posts")
     public Iterable<PostResponse> getPostsByPostIds(@RequestHeader("Post-Ids") String ids) {
         String[] postIdStrings = ids.split(";");
@@ -62,6 +64,7 @@ public class PostController {
         return postService.getPostsByPostIds(postIds);
     }
 
+    @ApiIgnore
     @GetMapping("/posts/{postId}")
     public PostResponse getPostById(@PathVariable Long postId) {
         Post post = postService.getPostById(postId);
