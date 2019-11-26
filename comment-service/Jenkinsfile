@@ -27,6 +27,13 @@ pipeline {
                   sh 'mvn test'
               }
             }
+            post {
+                always {
+                    dir("comment-service/") {
+                        junit 'target/surefire-reports/*.xml'
+                    }
+                }
+            }
         }
         stage('Coverage') {
             steps {
@@ -38,7 +45,6 @@ pipeline {
                 always {
                     dir("comment-service/") {
                         cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
-                        junit 'target/surefire-reports/*.xml'
                     }
                 }
             }
