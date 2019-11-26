@@ -38,10 +38,6 @@ pipeline {
                 always {
                     dir("comment-service/") {
                         cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
-                    }
-                }
-                always {
-                    dir("comment-service/") {
                         junit 'target/surefire-reports/*.xml'
                     }
                 }
