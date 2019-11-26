@@ -1,0 +1,80 @@
+pipeline {
+    environment {
+        registry = "davisballen/scandit_profile-service"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+    agent {
+        docker {
+            image 'maven:3.6.2-jdk-8'
+            args ' --privileged -u="root" -v /tmp/.m2:/root/.m2 -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+        stage('Build') {
+            steps {
+                dir("profile-service/") {
+                    sh 'mvn -B -DskipTests clean package'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+              dir("profile-service/") {
+                  sh 'mvn test'
+              }
+            }
+            post {
+                always {
+                    dir("profile-service/") {
+                        junit 'target/surefire-reports/*.xml'
+                    }
+                }
+            }
+        }
+        stage('Coverage') {
+            steps {
+                dir("profile-service/") {
+                    sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+                }
+            }
+            post {
+                always {
+                    dir("profile-service/") {
+                        cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+                    }
+                }
+            }
+        }
+        stage('dockerBuild') {
+            steps {
+                dir("profile-service/") {
+                    script {
+                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    }
+                }
+            }
+        }
+        stage('dockerDeliver') {
+            steps {
+                dir("profile-service/") {
+                    script {
+                        docker.withRegistry( '', registryCredential ) {
+                            dockerImage.push()
+                        }
+                    }
+                }
+            }
+        }
+        stage('dockerCleanup') {
+            steps {
+                dir("profile-service/") {
+                    sh "docker rmi $registry:$BUILD_NUMBER"
+                }
+            }
+        }
+    }
+}
