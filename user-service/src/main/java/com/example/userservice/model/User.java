@@ -1,16 +1,25 @@
 package com.example.userservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.nio.file.AccessMode;
 import java.util.ArrayList;
 import java.util.List;
 
+//@ApiModel(value="DifferentModel", description="Sample model for the documentation")
 @Entity
 @Table(name = "users")
 public class User {
 
+    //@ApiModelProperty(accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

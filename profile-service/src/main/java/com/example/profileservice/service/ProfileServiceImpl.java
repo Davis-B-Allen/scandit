@@ -10,12 +10,23 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.example.profileservice.controller.UserProfileController;
+
+/**
+ * Implementation class for the {@link ProfileService}
+ * Defines all its methods, as well as any other business logic needed for the Profile service
+ * */
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     ProfileRepository profileRepository;
 
+    /**
+     * Creates a new profile
+     * @param profile The new profile information to be added to the user.
+     * @param username The current user's username.
+     * */
     @Override
     public ProfileResponse createProfile(Profile profile, String username) {
 
@@ -33,6 +44,10 @@ public class ProfileServiceImpl implements ProfileService {
         return profileResponse;
     }
 
+    /**
+     * Gets a user's profile
+     * @param username The current user's username.
+     * */
     @Override
     public ProfileResponse getProfileByUsername(String username) {
 
@@ -48,6 +63,10 @@ public class ProfileServiceImpl implements ProfileService {
         return profileResponse;
     }
 
+    /**
+     * Deletes a user's profile
+     * @param username The current user's username.
+     * */
     @Override
     public String deleteProfileByUsername(String username) {
         Profile userProfile = profileRepository.findProfileByUsername(username);

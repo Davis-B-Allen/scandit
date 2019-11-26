@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,13 +55,14 @@ public class CommentController {
     }
 
     // Service-to-service methods
-
+    @ApiIgnore
     @Transactional
     @DeleteMapping("/comments/post/{postId}")
     public List<Long> deleteCommentsByPostId(@PathVariable Long postId) {
         return commentService.deleteCommentsByPostId(postId);
     }
 
+    @ApiIgnore
     @Transactional
     @DeleteMapping("/comments/user/{username}")
     public List<Long> deleteCommentsByUsername(@PathVariable String username) {

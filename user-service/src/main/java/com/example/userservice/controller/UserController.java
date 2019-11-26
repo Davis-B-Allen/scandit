@@ -2,7 +2,8 @@ package com.example.userservice.controller;
 
 import com.example.userservice.responseobject.JwtResponse;
 import com.example.userservice.service.UserService;
-import io.swagger.annotations.ApiOperation;
+import com.example.userservice.swagger.ExtraApiModels;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,9 @@ public class UserController {
         return ResponseEntity.ok(userService.signup(user));
     }
 
-    @PostMapping("/login")
     @ApiOperation(value = "Login with username and password", response = JwtResponse.class)
-    public ResponseEntity login(@RequestBody User user) {
+    @PostMapping("/login")
+    public ResponseEntity login(@ApiParam(value = "This should be using the UserLogin ApiModel, not User", type = "UserLogin") @RequestBody User user) {
         return ResponseEntity.ok(userService.login(user));
     }
 

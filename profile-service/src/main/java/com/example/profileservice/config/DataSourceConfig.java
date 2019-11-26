@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
 
+/**
+ * Configuration file to properly access Users database.
+ * Gets the url from vcap.services and manipulates it to properly store the user data.
+ * */
 @Configuration
 @Profile("pcf")
 public class DataSourceConfig {
@@ -15,6 +19,9 @@ public class DataSourceConfig {
     @Value("${vcap.services}")
     private String vcapServices;
 
+    /**
+     * Method to programmatically configure the database with the correct database URL
+     * */
     @Bean
     public DataSource getDataSource() {
         System.out.println(vcapServices);
