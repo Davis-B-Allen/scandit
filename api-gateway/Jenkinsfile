@@ -27,6 +27,13 @@ pipeline {
                   sh 'mvn test'
               }
             }
+            post {
+                always {
+                    dir("api-gateway/") {
+                        junit 'target/surefire-reports/*.xml'
+                    }
+                }
+            }
         }
         stage('Coverage') {
             steps {
