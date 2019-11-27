@@ -5,6 +5,8 @@ import com.example.userservice.model.UserRole;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.responseobject.JwtResponse;
 import com.example.userservice.util.JwtUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +35,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JwtUtil jwtUtil;
 
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Override
     public JwtResponse signup(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -43,6 +47,7 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
         if (savedUser != null) {
             UserDetails userDetails = loadUserByUsername(savedUser.getUsername());
+            logger.info("Created new user: " + savedUser.getUsername());
             return new JwtResponse(jwtUtil.generateToken(userDetails), savedUser.getUsername());
         }
         return null; // TODO: throw some more sensible exception
