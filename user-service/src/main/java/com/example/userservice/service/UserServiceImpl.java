@@ -7,6 +7,8 @@ import com.example.userservice.model.UserRole;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.responseobject.JwtResponse;
 import com.example.userservice.util.JwtUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JwtUtil jwtUtil;
 
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Override
     public JwtResponse signup(User user) throws LoginException {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -53,6 +57,7 @@ public class UserServiceImpl implements UserService {
             throw new LoginException("Database error: unable to save user");
         } else {
             UserDetails userDetails = loadUserByUsername(savedUser.getUsername());
+            logger.info("Created new user: " + savedUser.getUsername());
             return new JwtResponse(jwtUtil.generateToken(userDetails), savedUser.getUsername());
         }
     }
