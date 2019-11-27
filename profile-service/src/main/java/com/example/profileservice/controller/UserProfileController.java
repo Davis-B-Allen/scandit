@@ -27,7 +27,7 @@ public class UserProfileController {
      * second, it will update the user's current profile to the profile information the user provides.
      * */
     @PostMapping("/profile")
-    public ProfileResponse createProfile(@RequestHeader("username") String username, @Valid @RequestBody Profile profile) throws ProfileServiceException {
+    public ProfileResponse createProfile(@RequestHeader("username") String username, @RequestBody Profile profile) throws ProfileServiceException {
         return profileService.createProfile(profile, username);
     }
 
