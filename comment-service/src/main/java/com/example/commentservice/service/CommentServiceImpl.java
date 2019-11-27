@@ -51,6 +51,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Long deleteComment(Long commentId) {
+
+
         commentRepository.deleteById(commentId);
         return commentId;
     }
