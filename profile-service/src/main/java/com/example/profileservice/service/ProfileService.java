@@ -1,5 +1,6 @@
 package com.example.profileservice.service;
 
+import com.example.profileservice.exception.ProfileServiceException;
 import com.example.profileservice.model.Profile;
 import com.example.profileservice.responseobjects.ProfileResponse;
 
@@ -14,13 +15,13 @@ public interface ProfileService {
      * @param profile the new profile information to be added to the user.
      * @param username the name of the user associated with this profile.
      * */
-    ProfileResponse createProfile(Profile profile, String username);
+    ProfileResponse createProfile(Profile profile, String username) throws ProfileServiceException;
 
     /**
      * Gets a user's profile
      * @param username the name of the user associated with this profile.
      * */
-    ProfileResponse getProfileByUsername(String username);
+    ProfileResponse getProfileByUsername(String username) throws ProfileServiceException;
 
     /**
      * Deletes a user's profile

@@ -1,5 +1,6 @@
 package com.example.postservice.controller;
 
+import com.example.postservice.exception.PostServiceException;
 import com.example.postservice.model.Post;
 import com.example.postservice.responseobjects.PostResponse;
 import com.example.postservice.responseobjects.User;
@@ -20,7 +21,7 @@ public class PostController {
     PostService postService;
 
     @PostMapping("/post")
-    public PostResponse createPost(@RequestHeader("username") String username, @Valid @RequestBody Post post) {
+    public PostResponse createPost(@RequestHeader("username") String username, @Valid @RequestBody Post post) throws PostServiceException {
         return postService.createPost(post, username);
     }
 

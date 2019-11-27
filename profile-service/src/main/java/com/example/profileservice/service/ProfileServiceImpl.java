@@ -1,5 +1,6 @@
 package com.example.profileservice.service;
 
+import com.example.profileservice.exception.ProfileServiceException;
 import com.example.profileservice.model.Profile;
 import com.example.profileservice.repository.ProfileRepository;
 import com.example.profileservice.responseobjects.ProfileResponse;
@@ -28,7 +29,7 @@ public class ProfileServiceImpl implements ProfileService {
      * @param username The current user's username.
      * */
     @Override
-    public ProfileResponse createProfile(Profile profile, String username) {
+    public ProfileResponse createProfile(Profile profile, String username) throws ProfileServiceException {
 
         Profile userProfile = profileRepository.findProfileByUsername(username);
         if (userProfile != null) {
@@ -37,6 +38,10 @@ public class ProfileServiceImpl implements ProfileService {
 
         profile.setUsername(username);
         Profile savedProfile = profileRepository.save(profile);
+
+        if (savedProfile == null) {
+            throw new ProfileServiceException("Database error: could not save profile");
+        }
 
         User user = new User(username);
         ProfileResponse profileResponse = new ProfileResponse(savedProfile.getId(), profile.getAdditionalEmail(), savedProfile.getMobile(), savedProfile.getAddress(), user);
@@ -49,14 +54,14 @@ public class ProfileServiceImpl implements ProfileService {
      * @param username The current user's username.
      * */
     @Override
-    public ProfileResponse getProfileByUsername(String username) {
+    public ProfileResponse getProfileByUsername(String username) throws ProfileServiceException {
 
         Profile userProfile = profileRepository.findProfileByUsername(username);
-        if (userProfile == null) {
-            throw new EntityNotFoundException("Couldn't find profile for user " + username);
-        }
 
         User user = new User(username);
+        if (userProfile == null) {
+            throw new ProfileServiceException("Couldn't find profile for user " + username);
+        }
 
         ProfileResponse profileResponse = new ProfileResponse(userProfile.getId(), userProfile.getAdditionalEmail(), userProfile.getMobile(), userProfile.getAddress(), user);
 
@@ -70,6 +75,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public String deleteProfileByUsername(String username) {
         Profile userProfile = profileRepository.findProfileByUsername(username);
+        if (userProfile == null) {
+            throw new EntityNotFoundException("Couldn't find profile for user " + username);
+        }
 
         profileRepository.delete(userProfile);
 

@@ -1,6 +1,7 @@
 package com.example.postservice.service;
 
 import com.example.postservice.client.CommentClient;
+import com.example.postservice.exception.PostServiceException;
 import com.example.postservice.model.Post;
 import com.example.postservice.repository.PostRepository;
 import com.example.postservice.responseobjects.PostResponse;
@@ -25,15 +26,14 @@ public class PostServiceImpl implements PostService {
     CommentClient commentClient;
 
     @Override
-    public PostResponse createPost(Post post, String username) {
-        if (username != null && !username.equals("")) {
+    public PostResponse createPost(Post post, String username) throws PostServiceException {
+        if (username == null || username.equals("")) {
+            throw new PostServiceException("Error: you must be logged in to create a post");
+        } else {
             post.setUsername(username);
             Post savedPost = postRepository.save(post);
             return new PostResponse(savedPost, new User(username));
-        } else {
-            System.out.println("USERNAME WAS EITHER NULL OR BLANK; WE REALLY SHOULDN'T BE HERE!!!");
         }
-        return null;
     }
 
     // TODO: UNDERSTAND WHAT THIS @TRANSACTIONAL ANNOTATION IS DOING AND WHY WE NEED IT TO AVOID ERRORS

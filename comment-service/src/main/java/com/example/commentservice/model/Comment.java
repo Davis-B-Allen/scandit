@@ -3,6 +3,8 @@ package com.example.commentservice.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "comments")
@@ -12,6 +14,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "You must provide some text in your comment")
+    @NotBlank(message = "Comment text cannot be blank")
     @Column(nullable = false)
     private String text;
 

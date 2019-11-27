@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class CommentController {
     public CommentResponse createComment(@RequestHeader("username") String username,
                                          @RequestHeader("userRoles") String authorities,
                                          @PathVariable Long postId,
-                                         @RequestBody Comment comment) throws IOException {
+                                         @Valid @RequestBody Comment comment) throws IOException {
         return commentService.createComment(comment, username, postId);
     }
 

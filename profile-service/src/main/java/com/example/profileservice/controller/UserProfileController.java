@@ -1,11 +1,14 @@
 package com.example.profileservice.controller;
 
+import com.example.profileservice.exception.ProfileServiceException;
 import com.example.profileservice.model.Profile;
 import com.example.profileservice.responseobjects.ProfileResponse;
 import com.example.profileservice.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 /**
  * Controller for the Profile microservice to expose APIs
@@ -24,7 +27,7 @@ public class UserProfileController {
      * second, it will update the user's current profile to the profile information the user provides.
      * */
     @PostMapping("/profile")
-    public ProfileResponse createProfile(@RequestHeader("username") String username, @RequestBody Profile profile) {
+    public ProfileResponse createProfile(@RequestHeader("username") String username, @Valid @RequestBody Profile profile) throws ProfileServiceException {
         return profileService.createProfile(profile, username);
     }
 
@@ -33,8 +36,7 @@ public class UserProfileController {
      * The request will get the username from the current session token and use that to retrieve the corresponding user's profile.
      * */
     @GetMapping("/profile")
-    public ProfileResponse getProfileByUsername(@RequestHeader("username") String username) {
-        System.out.println(username);
+    public ProfileResponse getProfileByUsername(@RequestHeader("username") String username) throws ProfileServiceException {
         return profileService.getProfileByUsername(username);
     }
 
