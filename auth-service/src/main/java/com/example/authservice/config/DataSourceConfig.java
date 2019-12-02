@@ -1,5 +1,7 @@
 package com.example.authservice.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,17 +17,13 @@ public class DataSourceConfig {
     @Value("${vcap.services}")
     private String vcapServices;
 
+    Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
+
     @Bean
     public DataSource getDataSource() {
-        System.out.println(vcapServices);
         String[] strs = vcapServices.split("postgres");
-        System.out.println("!!!!!!");
-        System.out.println(strs[2]);
         String[] strs2 = strs[2].split("\"");
-        System.out.println("!!!!!!");
-        System.out.println(strs2[0]);
         String elephantSqlUrl = strs2[0];
-        System.out.println(elephantSqlUrl);
         String[] bits = elephantSqlUrl.split("@");
         String credString = bits[0].substring(3);
         String creds[] = credString.split(":");
@@ -33,9 +31,10 @@ public class DataSourceConfig {
         String password = creds[1];
 
         String correctUrl = "jdbc:postgresql://" + bits[1];
-        System.out.println(correctUrl);
-        System.out.println(username);
-        System.out.println(password);
+        logger.info("After parsing vcap services, database info is:\n" +
+                "correctUrl: " + correctUrl + "\n" +
+                "username: " + username + "\n" +
+                "password: " + password + "\n");
 
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url(correctUrl);
