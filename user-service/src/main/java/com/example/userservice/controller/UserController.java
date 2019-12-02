@@ -3,7 +3,6 @@ package com.example.userservice.controller;
 import com.example.userservice.exception.LoginException;
 import com.example.userservice.responseobject.JwtResponse;
 import com.example.userservice.service.UserService;
-import com.example.userservice.swagger.ExtraApiModels;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
