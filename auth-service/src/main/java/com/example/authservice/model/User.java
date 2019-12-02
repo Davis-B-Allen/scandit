@@ -15,18 +15,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Username cannot be blank")
-    @NotNull(message = "Username must be present")
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Email(message = "Invalid email format")
-    @NotNull(message = "Email must be present")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "Password cannot be blank")
-    @NotNull(message = "Password must be present")
     @Column(nullable = false)
     private String password;
 
@@ -37,13 +31,6 @@ public class User {
     private List<UserRole> userRoles;
 
     public User() { }
-
-    public User(Long id, String username, String email, String password) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
 
     public Long getId() {
         return id;
@@ -85,9 +72,4 @@ public class User {
         this.userRoles = userRoles;
     }
 
-    public List<UserRole> addUserRole(UserRole userRole) {
-        if (userRoles == null) userRoles = new ArrayList<>();
-        userRoles.add(userRole);
-        return userRoles;
-    }
 }
