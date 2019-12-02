@@ -65,15 +65,19 @@ public class AuthControllerTest {
     public AuthControllerTest() {
         user = new User();
         adminUser = new User();
-
         userRoleUser = new UserRole();
+        userRoleAdmin = new UserRole();
+        objectMapper = new ObjectMapper();
+    }
+
+    @BeforeEach
+    public void init() {
         userRoleUser.setId(1);
         userRoleUser.setName("ROLE_USER");
-
-        userRoleAdmin = new UserRole();
         userRoleAdmin.setId(2);
         userRoleAdmin.setName("ROLE_ADMIN");
 
+        user.setId(1L);
         user.setUsername(USERNAME);
         user.setEmail(EMAIL);
         user.setPassword(PASSWORD);
@@ -81,6 +85,7 @@ public class AuthControllerTest {
         roles.add(userRoleUser);
         user.setUserRoles(roles);
 
+        adminUser.setId(2L);
         adminUser.setUsername(ADMIN_USERNAME);
         adminUser.setEmail(ADMIN_EMAIL);
         adminUser.setPassword(ADMIN_PASSWORD);
@@ -89,7 +94,14 @@ public class AuthControllerTest {
         adminRoles.add(userRoleAdmin);
         adminUser.setUserRoles(adminRoles);
 
-        objectMapper = new ObjectMapper();
+        List<User> users = new ArrayList<>();
+        List<User> adminUsers = new ArrayList<>();
+        users.add(user);
+        users.add(adminUser);
+        adminUsers.add(adminUser);
+
+        userRoleUser.setUsers(users);
+        userRoleAdmin.setUsers(adminUsers);
     }
 
     @Test

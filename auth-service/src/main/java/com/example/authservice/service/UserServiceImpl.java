@@ -3,7 +3,6 @@ package com.example.authservice.service;
 import com.example.authservice.model.User;
 import com.example.authservice.model.UserRole;
 import com.example.authservice.repository.UserRepository;
-import com.example.authservice.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,10 +24,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    JwtUtil jwtUtil;
-
 
     public UserDetails loadUserByUsername(String username) {
         User user = getUser(username);
