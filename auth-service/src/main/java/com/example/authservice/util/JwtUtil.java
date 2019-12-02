@@ -29,12 +29,6 @@ public class JwtUtil implements Serializable {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public List<String> getAuthoritiesFromToken(String token) {
-        final Claims claims = getAllClaimsFromToken(token);
-        List<String> authorities = (List<String>) claims.get("authorities");
-        return authorities;
-    }
-
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
