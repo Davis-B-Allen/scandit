@@ -15,8 +15,6 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Name cannot be blank")
-    @NotNull(message = "Name must be preset")
     @Column(nullable = false, unique = true)
     private String name;
 
