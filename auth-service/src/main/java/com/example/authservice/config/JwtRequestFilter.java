@@ -3,6 +3,8 @@ package com.example.authservice.config;
 import com.example.authservice.service.UserService;
 import com.example.authservice.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,28 +28,33 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
+    Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        System.out.println(request.getRequestURI());
-        System.out.println(request.getHeader("Authorization"));
-        System.out.println(request.getHeader("Content-Type"));
+        logger.info("Received request for authentication with\n" +
+                "Route: " + request.getRequestURI() + "\n" +
+                "Authorization Header: " + request.getHeader("Authorization") + "\n" +
+                "Content-Type: " + request.getHeader("Content-Type"));
 
         final String requestTokenHeader = request.getHeader("Authorization");
 
         String username = null;
         String jwtToken = null;
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+        if (requestTokenHeader == null) {
+            logger.warn("No Authorization header provided");
+        } else if (requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 username = jwtUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
-                System.out.println("Unable to get JWT Token");
+                logger.warn("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
-                System.out.println("JWT Token has expired");
+                logger.warn("JWT Token has expired");
             } catch (Exception e) {
-                System.out.println("Couldn't parse JSON Web Token for some reason");
+                logger.warn("Couldn't parse JSON Web Token for some reason");
             }
         } else {
             logger.warn("JWT Token does not begin with Bearer String");
