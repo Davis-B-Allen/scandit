@@ -6,7 +6,7 @@ import com.example.userservice.responseobject.JwtResponse;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
-    JwtResponse signup(User user) throws LoginException;
+    JwtResponse signup(User user) throws Exception;
 
     JwtResponse login(User user) throws Exception;
 

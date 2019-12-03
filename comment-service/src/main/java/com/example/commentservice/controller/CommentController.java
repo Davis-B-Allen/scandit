@@ -1,6 +1,8 @@
 package com.example.commentservice.controller;
 
 import com.example.commentservice.client.PostClient;
+import com.example.commentservice.exception.CommentNotCreatedException;
+import com.example.commentservice.exception.CommentNotFoundException;
 import com.example.commentservice.model.Comment;
 import com.example.commentservice.responseobject.CommentResponse;
 import com.example.commentservice.service.CommentService;
@@ -28,14 +30,14 @@ public class CommentController {
     public CommentResponse createComment(@RequestHeader("username") String username,
                                          @RequestHeader("userRoles") String authorities,
                                          @PathVariable Long postId,
-                                         @Valid @RequestBody Comment comment) throws IOException {
+                                         @Valid @RequestBody Comment comment) throws IOException, CommentNotCreatedException {
         return commentService.createComment(comment, username, postId);
     }
 
     @DeleteMapping("/comment/{commentId}")
     public ResponseEntity deleteComment(@RequestHeader("username") String username,
                                         @RequestHeader("userRoles") String authorities,
-                                        @PathVariable Long commentId) {
+                                        @PathVariable Long commentId) throws CommentNotFoundException {
         Comment comment = commentService.getCommentById(commentId);
         if (username.equals(comment.getUsername()) || authorities.contains("ROLE_ADMIN")) {
             commentService.deleteComment(commentId);
@@ -46,12 +48,12 @@ public class CommentController {
     }
 
     @GetMapping("/user/comment")
-    public List<CommentResponse> getCommentsByUser(@RequestHeader("username") String username) {
+    public List<CommentResponse> getCommentsByUser(@RequestHeader("username") String username) throws CommentNotFoundException {
         return commentService.getCommentsByUsername(username);
     }
 
     @GetMapping("/post/{postId}/comment")
-    public List<CommentResponse> getCommentsByPostId(@PathVariable Long postId) {
+    public List<CommentResponse> getCommentsByPostId(@PathVariable Long postId) throws CommentNotFoundException {
         return commentService.getCommentsByPostId(postId);
     }
 
@@ -59,14 +61,14 @@ public class CommentController {
     @ApiIgnore
     @Transactional
     @DeleteMapping("/comments/post/{postId}")
-    public List<Long> deleteCommentsByPostId(@PathVariable Long postId) {
+    public List<Long> deleteCommentsByPostId(@PathVariable Long postId) throws CommentNotFoundException {
         return commentService.deleteCommentsByPostId(postId);
     }
 
     @ApiIgnore
     @Transactional
     @DeleteMapping("/comments/user/{username}")
-    public List<Long> deleteCommentsByUsername(@PathVariable String username) {
+    public List<Long> deleteCommentsByUsername(@PathVariable String username) throws CommentNotFoundException {
         return commentService.deleteCommentsByUsername(username);
     }
 

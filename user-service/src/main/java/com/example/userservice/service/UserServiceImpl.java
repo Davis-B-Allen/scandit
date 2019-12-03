@@ -2,6 +2,7 @@ package com.example.userservice.service;
 
 import com.example.userservice.exception.ErrorResponse;
 import com.example.userservice.exception.LoginException;
+import com.example.userservice.exception.SignupException;
 import com.example.userservice.model.User;
 import com.example.userservice.model.UserRole;
 import com.example.userservice.repository.UserRepository;
@@ -42,19 +43,19 @@ public class UserServiceImpl implements UserService {
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
-    public JwtResponse signup(User user) throws LoginException {
+    public JwtResponse signup(User user) throws Exception {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         UserRole userRole = userRoleService.getUserRoleByName("ROLE_USER");
         if (userRole == null) {
-            throw new LoginException("Error: no role of 'ROLE_USER' found in the database. Please create a new 'ROLE_USER' role");
+            throw new SignupException(HttpStatus.BAD_REQUEST, "Error: no role of 'ROLE_USER' found in the database. Please create a new 'ROLE_USER' role");
         } else {
             user.addUserRole(userRole);
         }
 
         User savedUser = userRepository.save(user);
         if (savedUser == null) {
-            throw new LoginException("Database error: unable to save user");
+            throw new SignupException(HttpStatus.BAD_REQUEST, "Database error: unable to save user");
         } else {
             UserDetails userDetails = loadUserByUsername(savedUser.getUsername());
             logger.info("Created new user: " + savedUser.getUsername());
