@@ -47,7 +47,7 @@ public class UserProfileController {
     // external methods
     @ApiIgnore
     @DeleteMapping("/profile/{username}")
-    public String deleteProfileByUsername(@PathVariable String username) {
+    public String deleteProfileByUsername(@PathVariable String username) throws ProfileServiceException {
         return profileService.deleteProfileByUsername(username);
     }
 }

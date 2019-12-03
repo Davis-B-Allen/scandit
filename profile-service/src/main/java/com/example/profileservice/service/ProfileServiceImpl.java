@@ -73,10 +73,10 @@ public class ProfileServiceImpl implements ProfileService {
      * @param username The current user's username.
      * */
     @Override
-    public String deleteProfileByUsername(String username) {
+    public String deleteProfileByUsername(String username) throws ProfileServiceException {
         Profile userProfile = profileRepository.findProfileByUsername(username);
         if (userProfile == null) {
-            throw new EntityNotFoundException("Couldn't find profile for user " + username);
+            throw new ProfileServiceException("Couldn't find profile for user " + username);
         }
 
         profileRepository.delete(userProfile);

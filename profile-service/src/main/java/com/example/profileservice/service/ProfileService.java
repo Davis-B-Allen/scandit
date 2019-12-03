@@ -27,5 +27,5 @@ public interface ProfileService {
      * Deletes a user's profile
      * @param username the name of the user associated with this profile.
      * */
-    String deleteProfileByUsername(String username);
+    String deleteProfileByUsername(String username) throws ProfileServiceException;
 }

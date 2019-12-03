@@ -1,4 +1,4 @@
-package com.example.userservice.config;
+package com.example.profileservice.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
