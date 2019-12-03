@@ -1,6 +1,7 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.exception.LoginException;
+import com.example.userservice.exception.SignupException;
 import com.example.userservice.responseobject.JwtResponse;
 import com.example.userservice.service.UserService;
 import com.example.userservice.swagger.ExtraApiModels;
@@ -21,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@Valid @RequestBody User user) throws LoginException {
+    public ResponseEntity signup(@Valid @RequestBody User user) throws Exception {
         return ResponseEntity.ok(userService.signup(user));
     }
 
