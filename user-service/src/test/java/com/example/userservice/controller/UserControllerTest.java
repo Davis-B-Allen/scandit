@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.userservice.config.SecurityConfig;
+import com.example.userservice.exception.ExceptionHandler;
 import com.example.userservice.model.User;
 import com.example.userservice.model.UserRole;
 import com.example.userservice.responseobject.JwtResponse;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {UserController.class, SecurityConfig.class})
+@ContextConfiguration(classes = {UserController.class, SecurityConfig.class, ExceptionHandler.class})
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 
