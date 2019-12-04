@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 
 @Configuration
 @Profile("pcf")
@@ -17,6 +18,17 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource getDataSource() {
+        HashMap<String, String> dbInfo = parseDbUrlAndCreds(vcapServices);
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        dataSourceBuilder.url(dbInfo.get("correctUrl"));
+        dataSourceBuilder.username(dbInfo.get("username"));
+        dataSourceBuilder.password(dbInfo.get("password"));
+        return dataSourceBuilder.build();
+    }
+
+    public HashMap<String, String> parseDbUrlAndCreds(String vcapServices) {
+        HashMap<String, String> dbInfo = new HashMap();
+
         System.out.println(vcapServices);
         String[] strs = vcapServices.split("postgres");
         System.out.println("!!!!!!");
@@ -37,11 +49,10 @@ public class DataSourceConfig {
         System.out.println(username);
         System.out.println(password);
 
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.url(correctUrl);
-        dataSourceBuilder.username(username);
-        dataSourceBuilder.password(password);
-        return dataSourceBuilder.build();
-    }
+        dbInfo.put("correctUrl", correctUrl);
+        dbInfo.put("username", username);
+        dbInfo.put("password", password);
 
+        return dbInfo;
+    }
 }

@@ -1,12 +1,12 @@
 package com.example.userservice.service;
 
 import com.example.userservice.exception.LoginException;
+import com.example.userservice.exception.SignupException;
 import com.example.userservice.model.User;
 import com.example.userservice.model.UserRole;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.responseobject.JwtResponse;
 import com.example.userservice.util.JwtUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -91,7 +89,7 @@ public class UserServiceTest {
 
         Throwable thrown = catchThrowable(() -> userService.signup(user));
 
-        assertThat(thrown).isInstanceOf(LoginException.class);
+        assertThat(thrown).isInstanceOf(SignupException.class);
         verify(jwtUtil, never()).generateToken(any());
     }
 
@@ -102,7 +100,7 @@ public class UserServiceTest {
 
         Throwable thrown = catchThrowable(() -> userService.signup(user));
 
-        assertThat(thrown).isInstanceOf(LoginException.class);
+        assertThat(thrown).isInstanceOf(SignupException.class);
         verify(jwtUtil, never()).generateToken(any());
     }
 
