@@ -19,6 +19,7 @@ By Davis Allen and Ariel Mendoza
 * Jacoco
 * JUnit
 * Jenkins
+* AWS EC2
 
 ### Logging and Monitoring
 * Elasticsearch
@@ -31,6 +32,7 @@ By Davis Allen and Ariel Mendoza
 
 ### Email Notifications
 * RabbitMQ
+* SendGrid
 
 ### IDE
 * IntelliJ
@@ -46,12 +48,12 @@ By Davis Allen and Ariel Mendoza
 *We used username as the foreign key wherever possible, allowing us to avoid needing to call the user database for user info.*
 
 <!-- Project 4 Approach -->
-We began by integrating the ELK stack for monitoring our application, as well as documentation using Swagger and Javadoc. We then added functionality for users to receive email notifications when someone comments on their post using RabbitMQ. 
+We began by integrating the ELK stack for monitoring our application, as well as documentation using Swagger and Javadoc. We then added functionality for users to receive email notifications when someone comments on their post using RabbitMQ.
 
 Early on we also worked on setting up continuous integration and deployment via Jenkins to avoid having to manually rebuild our services as our code was updated. Once that was set up, we finished with integration and unit testing, as well as handling exceptions gracefully and validating user input.
 
 
- 
+
 
 ## Challenges and Wins
 *Our first major challenge was figuring out how to properly configure the services for deployment on PCF. Aside from that, our other major hurdle was retrieving data from multiple services based on one request, such as retrieving all of a user’s posts.*
@@ -79,14 +81,3 @@ One thing we were proud of was being able to keep our routes the same for the fr
 
 ## User Stories
 [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2417875)
-
-
-## Links of Interest
-
-[eureka server](http://dba-docker-test-eureka.cfapps.io/)
-
-[post microservice](http://dba-docker-test-api-gateway.cfapps.io/post/)
-
-[auth microservice](http://dba-docker-test-api-gateway.cfapps.io/auth/)
-
-[post microservice communicating with auth microservice](http://dba-docker-test-api-gateway.cfapps.io/post/myposts)
