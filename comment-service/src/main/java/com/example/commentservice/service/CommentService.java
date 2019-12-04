@@ -12,7 +12,7 @@ public interface CommentService {
 
     CommentResponse createComment(Comment comment, String username, Long postId) throws JsonProcessingException, CommentNotCreatedException;
 
-    Comment getCommentById(Long commentId);
+    Comment getCommentById(Long commentId) throws CommentNotFoundException;
 
     Long deleteComment(Long commentId) throws CommentNotFoundException;
 
@@ -22,5 +22,5 @@ public interface CommentService {
 
     List<Long> deleteCommentsByUsername(String username) throws CommentNotFoundException;
 
-    List<CommentResponse> getCommentsByPostId(Long postId) throws CommentNotFoundException;
+    List<CommentResponse> getCommentsByPostId(Long postId);
 }

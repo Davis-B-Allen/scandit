@@ -38,13 +38,13 @@ pipeline {
         stage('Coverage') {
             steps {
                 dir("comment-service/") {
-                    sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+                    sh 'mvn clean package jacoco:report'
                 }
             }
             post {
                 always {
                     dir("comment-service/") {
-                        cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
+                        publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
                     }
                 }
             }

@@ -6,7 +6,6 @@ import com.example.userservice.model.UserRole;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.responseobject.JwtResponse;
 import com.example.userservice.util.JwtUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -68,7 +65,7 @@ public class UserServiceTest {
     JwtUtil jwtUtil;
 
     @Test
-    public void signup_ValidUser_Success() throws LoginException {
+    public void signup_ValidUser_Success() throws Exception {
         when(bCryptPasswordEncoder.encode(anyString())).thenReturn(encodedPassword);
         when(userRoleService.getUserRoleByName(anyString())).thenReturn(userRole);
         when(userRepository.save(any())).thenReturn(user);

@@ -1,6 +1,5 @@
 package com.example.commentservice.controller;
 
-import com.example.commentservice.client.PostClient;
 import com.example.commentservice.exception.CommentNotCreatedException;
 import com.example.commentservice.exception.CommentNotFoundException;
 import com.example.commentservice.model.Comment;
@@ -23,12 +22,8 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @Autowired
-    PostClient postClient;
-
     @PostMapping("/comment/{postId}")
     public CommentResponse createComment(@RequestHeader("username") String username,
-                                         @RequestHeader("userRoles") String authorities,
                                          @PathVariable Long postId,
                                          @Valid @RequestBody Comment comment) throws IOException, CommentNotCreatedException {
         return commentService.createComment(comment, username, postId);
@@ -48,7 +43,7 @@ public class CommentController {
     }
 
     @GetMapping("/user/comment")
-    public List<CommentResponse> getCommentsByUser(@RequestHeader("username") String username) throws CommentNotFoundException {
+    public List<CommentResponse> getCommentsByUser(@RequestHeader("username") String username) {
         return commentService.getCommentsByUsername(username);
     }
 

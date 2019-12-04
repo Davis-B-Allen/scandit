@@ -11,12 +11,10 @@ import com.example.commentservice.responseobject.Post;
 import com.example.commentservice.responseobject.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,8 +50,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment getCommentById(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Could not find comment with id " + commentId));
+    public Comment getCommentById(Long commentId) throws CommentNotFoundException {
+        return commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException("Could not find comment with id " + commentId, HttpStatus.NOT_FOUND));
     }
 
     @Override
@@ -105,13 +103,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentResponse> getCommentsByPostId(Long postId) throws CommentNotFoundException {
+    public List<CommentResponse> getCommentsByPostId(Long postId) {
         Post post = postClient.getPostById(postId);
         List<Comment> comments = commentRepository.findAllByPostId(postId);
-
-        if (comments == null) {
-            throw new CommentNotFoundException("No comments found for post id " + postId);
-        }
 
         return comments.stream().map(comment -> {
             return new CommentResponse(comment, new User(comment.getUsername()), post);
