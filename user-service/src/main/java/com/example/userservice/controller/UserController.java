@@ -20,14 +20,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @ApiOperation(value = "Sign up with username, email and password", response = JwtResponse.class)
     @PostMapping("/signup")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "user", value = "a user object with just username, email and password", example = "{\n\t\"username\": \"user1\",\n\t\"email\": \"user1@example.com\",\n\t\"password\": password\n}", required = true, dataType = "string", paramType = "body")
+    })
     public ResponseEntity signup(@Valid @RequestBody User user) throws Exception {
         return ResponseEntity.ok(userService.signup(user));
     }
 
     @ApiOperation(value = "Login with username and password", response = JwtResponse.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "user", value = "a user object with just email and password", example = "{\n\t\"email\": \"user1@example.com\",\n\t\"password\": password\n}", required = true, dataType = "string", paramType = "body")
+    })
     @PostMapping("/login")
-    public ResponseEntity login(@ApiParam(value = "This should be using the UserLogin ApiModel, not User", type = "UserLogin") @RequestBody User user) throws Exception {
+    public ResponseEntity login(@RequestBody User user) throws Exception {
         return ResponseEntity.ok(userService.login(user));
     }
 
