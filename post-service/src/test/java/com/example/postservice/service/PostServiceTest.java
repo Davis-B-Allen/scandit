@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.postservice.client.CommentClient;
+import com.example.postservice.exception.PostNotCreatedException;
 import com.example.postservice.exception.PostNotFoundException;
+import com.example.postservice.exception.PostServiceException;
 import com.example.postservice.model.Post;
 import com.example.postservice.repository.PostRepository;
 import com.example.postservice.responseobjects.PostResponse;
@@ -25,11 +27,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.*;
 
 public class PostServiceTest {
 
@@ -58,14 +56,6 @@ public class PostServiceTest {
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
-
-//    @Before
-//    public void setUp() throws Exception {
-////        when(postRepository.save(post))
-////                .thenReturn(postResponse);
-//        when(postRepository.deleteByUsername(user.getUsername()))
-//                .thenReturn(Arrays.asList(post, post));
-//    }
 
     @Before
     public void initializeDummyUser() {
@@ -97,9 +87,26 @@ public class PostServiceTest {
     }
 
     @Test
+    public void createPost_UsernameNotFound_PostServiceException() throws Exception {
+        when(postRepository.save(any())).thenReturn(null);
+
+        Throwable thrown = catchThrowable(() -> postService.createPost(post, null));
+
+        assertThat(thrown).isInstanceOf(PostServiceException.class);
+    }
+
+    @Test
+    public void createPost_PostNotCreated_PostNotCreatedException() throws Exception {
+        when(postRepository.save(any())).thenReturn(null);
+
+        Throwable thrown = catchThrowable(() -> postService.createPost(post, user.getUsername()));
+
+        assertThat(thrown).isInstanceOf(PostNotCreatedException.class);
+    }
+
+    @Test
     public void deletePostsByUser_ListOfPosts_Success() throws Exception {
 
-        //when(postService.deletePost(post.getId())).thenReturn(post.getId());
         when(postRepository.deleteByUsername(user.getUsername())).thenReturn(Arrays.asList(post, post));
 
         List<Post> posts = new ArrayList<>();
@@ -111,6 +118,15 @@ public class PostServiceTest {
         assertEquals(posts, deletedPosts);
 
         verify(postRepository, times(1)).deleteByUsername(user.getUsername());
+    }
+
+    @Test
+    public void deletePostsByUser_PostNotDeleted_PostNotFoundException() throws Exception {
+        when(postRepository.deleteByUsername(user.getUsername())).thenReturn(null);
+
+        Throwable thrown = catchThrowable(() -> postService.deletePostsByUser(user.getUsername()));
+
+        assertThat(thrown).isInstanceOf(PostNotFoundException.class);
     }
 
     @Test
@@ -135,6 +151,15 @@ public class PostServiceTest {
     }
 
     @Test
+    public void getAllPosts_PostsNotFound_PostNotFoundException() throws Exception {
+        when(postRepository.findAll()).thenReturn(null);
+
+        Throwable thrown = catchThrowable(() -> postService.getAllPosts());
+
+        assertThat(thrown).isInstanceOf(PostNotFoundException.class);
+    }
+
+    @Test
     public void getPostsByUsername_ListOfPostResponses_Success() throws PostNotFoundException {
         List<Post> posts = new ArrayList<>();
         posts.add(post);
@@ -156,14 +181,19 @@ public class PostServiceTest {
     }
 
     @Test
+    public void getPostsByUsername_PostsNotFound_PostNotFoundException() throws Exception {
+        when(postRepository.getPostsByUsername(user.getUsername())).thenReturn(null);
+
+        Throwable thrown = catchThrowable(() -> postService.getPostsByUsername(user.getUsername()));
+
+        assertThat(thrown).isInstanceOf(PostNotFoundException.class);
+    }
+
+    @Test
     public void getPostById_Post_Success() {
         when(postRepository.findById(post.getId())).thenReturn(java.util.Optional.ofNullable(post));
 
-        //Optional<Post> savedPost = Optional.ofNullable(post);
-
         Post servicePost = postService.getPostById(post.getId());
-
-        //Optional<Post> localPost = postRepository.findById(post.getId());
 
         assertNotNull("Test returned null object, expected Post", servicePost);
         assertEquals(post, servicePost);
@@ -171,10 +201,6 @@ public class PostServiceTest {
 
     @Test
     public void deletePost_Long_Success() throws Exception {
-        //postRepository.deleteById(post.getId());
-
-        when(postRepository.save(post)).thenReturn(post);
-        //when(commentClient.deleteCommentsByPostId(post.getId()));
 
         Long deletedPostId = postService.deletePost(post.getId());
 
@@ -182,6 +208,15 @@ public class PostServiceTest {
 
         verify(postRepository, times(1)).deleteById(post.getId());
         verify(commentClient, times(1)).deleteCommentsByPostId(post.getId());
+    }
+
+    @Test
+    public void deletePost_PostNotFound_PostNotFoundException() throws Exception {
+        doThrow(new RuntimeException()).when(postRepository).deleteById(any());
+        
+        Throwable thrown = catchThrowable(() -> postService.deletePost(post.getId()));
+
+        assertThat(thrown).isInstanceOf(PostNotFoundException.class);
     }
 
     @Test
@@ -201,8 +236,6 @@ public class PostServiceTest {
 
         Iterable<PostResponse> userPosts = postService.getPostsByPostIds(postIds);
 
-        //Iterable<Post> retrievedPosts = postRepository.getPostsByIdIn(postIds);
-
         assertNotNull("Test returned null list, expected list of posts", userPosts);
 
         Iterator resIt = responses.iterator();
@@ -211,5 +244,17 @@ public class PostServiceTest {
         while (resIt.hasNext() && upIt.hasNext()) {
             assertThat(resIt.next()).isEqualToComparingFieldByFieldRecursively(upIt.next());
         }
+    }
+
+    @Test
+    public void getPostsByPostIds_PostsNotFound_PostNotFoundException() throws Exception {
+        Long[] postIds = new Long[1];
+        postIds[0] = 1L;
+
+        when(postRepository.getPostsByIdIn(postIds)).thenReturn(null);
+
+        Throwable thrown = catchThrowable(() -> postService.getPostsByPostIds(postIds));
+
+        assertThat(thrown).isInstanceOf(PostNotFoundException.class);
     }
 }

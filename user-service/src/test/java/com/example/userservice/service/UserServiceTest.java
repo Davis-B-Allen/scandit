@@ -68,7 +68,7 @@ public class UserServiceTest {
     JwtUtil jwtUtil;
 
     @Test
-    public void signup_ValidUser_Success() throws LoginException {
+    public void signup_ValidUser_Success() throws Exception {
         when(bCryptPasswordEncoder.encode(anyString())).thenReturn(encodedPassword);
         when(userRoleService.getUserRoleByName(anyString())).thenReturn(userRole);
         when(userRepository.save(any())).thenReturn(user);

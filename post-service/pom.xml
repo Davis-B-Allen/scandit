@@ -94,127 +94,17 @@
 			<version>3.0.0-SNAPSHOT</version>
 		</dependency>
 
-<!--	Following Dependencies Added for Testing	-->
 <!--		<dependency>-->
-<!--			<groupId>junit</groupId>-->
-<!--			<artifactId>junit</artifactId>-->
-<!--			<version>4.12</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.springframework</groupId>-->
-<!--			<artifactId>spring-test</artifactId>-->
-<!--			<version>5.1.9.RELEASE</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.mockito</groupId>-->
-<!--			<artifactId>mockito-core</artifactId>-->
-<!--			<version>3.0.0</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.skyscreamer</groupId>-->
-<!--			<artifactId>jsonassert</artifactId>-->
-<!--			<version>1.5.0</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>junit</groupId>-->
-<!--			<artifactId>junit</artifactId>-->
-<!--			<version>4.12</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.springframework</groupId>-->
-<!--			<artifactId>spring-test</artifactId>-->
-<!--			<version>5.1.9.RELEASE</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.mockito</groupId>-->
-<!--			<artifactId>mockito-core</artifactId>-->
-<!--			<version>3.0.0</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.skyscreamer</groupId>-->
-<!--			<artifactId>jsonassert</artifactId>-->
-<!--			<version>1.5.0</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>com.jayway.jsonpath</groupId>-->
-<!--			<artifactId>json-path</artifactId>-->
-<!--			<version>0.8.1</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>com.jayway.jsonpath</groupId>-->
-<!--			<artifactId>json-path-assert</artifactId>-->
-<!--			<version>2.4.0</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>com.jayway.jsonpath</groupId>-->
-<!--			<artifactId>json-path</artifactId>-->
-<!--			<version>2.4.0</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.hamcrest</groupId>-->
-<!--			<artifactId>hamcrest-all</artifactId>-->
-<!--			<version>1.3</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>junit</groupId>-->
-<!--			<artifactId>junit</artifactId>-->
-<!--			<version>4.11</version>-->
-<!--			<scope>test</scope>-->
-<!--			<exclusions>-->
-<!--				<exclusion>-->
-<!--					<artifactId>hamcrest-core</artifactId>-->
-<!--					<groupId>org.hamcrest</groupId>-->
-<!--				</exclusion>-->
-<!--			</exclusions>-->
+<!--			<groupId>org.hibernate.validator</groupId>-->
+<!--			<artifactId>hibernate-validator-annotation-processor</artifactId>-->
+<!--			<version>6.0.17.Final</version>-->
 <!--		</dependency>-->
 
 		<dependency>
-			<groupId>org.hibernate.validator</groupId>
-			<artifactId>hibernate-validator-annotation-processor</artifactId>
-			<version>6.0.17.Final</version>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.200</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>5.1.5.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>5.1.5.RELEASE</version>
-		</dependency>
-
-<!--		<dependency>-->
-<!--			<groupId>org.assertj</groupId>-->
-<!--			<artifactId>assertj-core</artifactId>-->
-<!--			&lt;!&ndash; use 2.9.1 for Java 7 projects &ndash;&gt;-->
-<!--			<version>3.13.2</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
 
 	</dependencies>
 
@@ -223,6 +113,33 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M4</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

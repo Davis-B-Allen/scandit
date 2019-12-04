@@ -1,101 +1,88 @@
 package com.example.postservice.controller;
 
+import com.example.postservice.exception.ExceptionHandler;
+import com.example.postservice.exception.PostNotCreatedException;
 import com.example.postservice.model.Post;
-import com.example.postservice.repository.PostRepository;
 import com.example.postservice.responseobjects.PostResponse;
 import com.example.postservice.responseobjects.User;
 import com.example.postservice.service.PostService;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.HttpHeaders;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ActiveProfiles("qa")
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {PostController.class, ExceptionHandler.class})
+@WebMvcTest(PostController.class)
+//@SpringBootTest
+//@AutoConfigureMockMvc
 public class PostControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
-    @InjectMocks
-    PostController postController;
-
-    @InjectMocks
-    private Post post;
-
-    @InjectMocks
     private User user;
+    private Post post;
+    private PostResponse postResponse;
+    private ObjectMapper objectMapper;
 
-    @Mock
+    @MockBean
     PostService postService;
 
-    @Mock
-    PostRepository postRepository;
-
-    @Mock
-    PostResponse postResponse;
-
-    @Before
-    public void setUp() throws Exception {
-        when(postService.createPost(post, user.getUsername()))
-                .thenReturn(postResponse);
-        when(postService.deletePost(post.getId()))
-                .thenReturn(post.getId());
-    }
-
-    @Before
-    public void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(postController).build();
-    }
-
-    @Before
-    public void initializeDummyUser() {
+    public PostControllerTest() {
         user = new User("testUser");
-        user.setUsername("testUser");
+        post = new Post();
+        postResponse = new PostResponse();
     }
 
-    @Before
-    public void initializeDummyPost() {
-        post = new Post();
+    //    @Before
+//    public void setUp() throws Exception {
+//        when(postService.createPost(post, user.getUsername()))
+//                .thenReturn(postResponse);
+//        when(postService.deletePost(post.getId()))
+//                .thenReturn(post.getId());
+//    }
+
+    @BeforeEach
+    public void init() {
+        objectMapper = new ObjectMapper();
+        user.setUsername("testUser");
         post.setId(1L);
         post.setTitle("first post");
         post.setDescription("post description");
         post.setUsername("testUser");
-    }
-
-    @Before
-    public void initializeDummyPostResponse() {
-        postResponse = new PostResponse();
         postResponse.setId(1L);
         postResponse.setTitle("first post");
         postResponse.setDescription("post description");
         postResponse.setUsername("testUser");
     }
+
 
 
 
@@ -151,11 +138,6 @@ public class PostControllerTest {
     // Create a new post
     @Test
     public void createPost_Post_Success() throws Exception {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//
-//        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-//        String postAsString = objectMapper.writeValueAsString(post);
-
         User user1 = new User("testUser");
 
         when(postService.createPost(post, user1.getUsername())).thenReturn(postResponse);
@@ -175,6 +157,42 @@ public class PostControllerTest {
         verify(postService, times(1)).createPost(any(), eq("testUser"));
         verifyNoMoreInteractions(postService);
 
+    }
+
+    @Test
+    public void createPost_PostNotValid_Exception() throws Exception {
+        post.setTitle("");
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/post")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(post));
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void createPost_DatabaseError_Exception() throws Exception {
+        System.out.println(objectMapper.writeValueAsString(post));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/post")
+                .header("username", user.getUsername())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(post));
+
+        System.out.println("1 !!!!!");
+        when(postService.createPost(any(), any())).thenThrow(new PostNotCreatedException("Error saving post to database", new Exception(), HttpStatus.CONFLICT));
+
+        System.out.println("2 !!!!!");
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isInternalServerError())
+                .andReturn();
+        System.out.println("3a !!!!!");
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        System.out.println("3b !!!!!");
     }
 
     // Delete an existing post
@@ -274,6 +292,7 @@ public class PostControllerTest {
 
         verify(postService, times(1)).getPostById(post.getId());
     }
+
 
 
 
