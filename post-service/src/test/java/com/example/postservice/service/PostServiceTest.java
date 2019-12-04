@@ -213,7 +213,7 @@ public class PostServiceTest {
     @Test
     public void deletePost_PostNotFound_PostNotFoundException() throws Exception {
         doThrow(new RuntimeException()).when(postRepository).deleteById(any());
-        
+
         Throwable thrown = catchThrowable(() -> postService.deletePost(post.getId()));
 
         assertThat(thrown).isInstanceOf(PostNotFoundException.class);
