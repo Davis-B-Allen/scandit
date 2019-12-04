@@ -1,6 +1,7 @@
 package com.example.userservice.service;
 
 import com.example.userservice.exception.LoginException;
+import com.example.userservice.exception.SignupException;
 import com.example.userservice.model.User;
 import com.example.userservice.model.UserRole;
 import com.example.userservice.repository.UserRepository;
@@ -88,7 +89,7 @@ public class UserServiceTest {
 
         Throwable thrown = catchThrowable(() -> userService.signup(user));
 
-        assertThat(thrown).isInstanceOf(LoginException.class);
+        assertThat(thrown).isInstanceOf(SignupException.class);
         verify(jwtUtil, never()).generateToken(any());
     }
 
@@ -99,7 +100,7 @@ public class UserServiceTest {
 
         Throwable thrown = catchThrowable(() -> userService.signup(user));
 
-        assertThat(thrown).isInstanceOf(LoginException.class);
+        assertThat(thrown).isInstanceOf(SignupException.class);
         verify(jwtUtil, never()).generateToken(any());
     }
 

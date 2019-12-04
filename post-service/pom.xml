@@ -196,26 +196,6 @@
 			<version>6.0.17.Final</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>5.1.5.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>5.1.5.RELEASE</version>
-		</dependency>
-
-<!--		<dependency>-->
-<!--			<groupId>org.assertj</groupId>-->
-<!--			<artifactId>assertj-core</artifactId>-->
-<!--			&lt;!&ndash; use 2.9.1 for Java 7 projects &ndash;&gt;-->
-<!--			<version>3.13.2</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-
 	</dependencies>
 
 	<build>
